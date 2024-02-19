@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Owner homepage</h1>
+
+<h2>User List</h2>
+<table class="table responsive-table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Approval Status</th>
+            <!-- Add a new column for action -->
+        </tr>
+    </thead>
+
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+
+            <td>
+                {% if not user.is_approved %}
+                <form method="post" action="{% url 'approve_user' user.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Pending</button>
+                </form>
+                {% else %}
+                <button type="button">Approved</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+</table>
+
+
+<div>
+    
+{% endblock %}
+    

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="signupContainer container-fluid" style="display: flex;align-items: center;justify-content: center;">
+
+
+    <div style="margin-top: 300px;display: flex;justify-content: space-between;">
+
+        <a href="{% url 'student_register' %}" class="btn btn-danger"
+            style="text-decoration: none;height: 100px; width: 400px;border: solid 2px;
+            display: flex;align-items: center;justify-content: center;">
+            Student register</a>
+
+
+        <a href="{% url 'trainer_register' %}" class="btn btn-success" 
+            style="text-decoration: none;height: 100px; width: 400px;border: solid 2px;
+            display: flex;align-items: center;justify-content: center;">
+            Trainer register</a>
+    </div>
+</section>
+
+{% endblock %}

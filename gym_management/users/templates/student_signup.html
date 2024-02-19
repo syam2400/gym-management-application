@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>STUDENT REGISTRATION</h1>
+
+
+<form method="POST" action="{% url 'student_register' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+
+        <input type="text" class="form-control" name="username" required placeholder="enter the name">
+        <br>
+        <input type="email" class="form-control" name="email" required placeholder="ENTER email">
+        <br>
+        <input type="number" class="form-control" name="phone" required placeholder="ENTER phone number">
+        <br>
+        <input type="number" class="form-control" name="age" required placeholder="ENTER age">
+        <br>
+        <input type="text" class="form-control" name="place" required placeholder="ENTER place">
+        <br>
+
+        <!-- gender selection  -->
+        <select name="gender" class="form-control">
+            <option value="">Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <br>
+        <!-- Fitness Level Field -->
+        <select name="fitness_level" class="form-control" required>
+            <option value="">Select your fitness level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option> <!-- Corrected typo from 'Intemediate' -->
+            <option value="Advanced">Advanced</option>
+        </select>
+        <br>
+        <!-- Goals Field -->
+        <select name="goal" class="form-control" required>
+            <option value="">Select your goal</option>
+            <option value="LOSE">Weight lose</option>
+            <option value="FIT">Maintain weight</option>
+            <option value="GAIN">Weight gain</option>
+        </select>
+    </div>
+    <br>
+
+    </div>
+    <br>
+    <div class="mb-3">
+
+        <input type="password" class="form-control" name="password" required>
+    </div>
+
+
+    <br>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+
+{% endblock %}
