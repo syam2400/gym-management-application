@@ -19,7 +19,7 @@ from django.urls import path
 from gym_students import views
 
 urlpatterns = [
-    path("students_homepage/",views.students_homepage,name='students_homepage')
+    path("students-homepage/",views.students_homepage,name='students_homepage')
   
 ]
 

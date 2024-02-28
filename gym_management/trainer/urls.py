@@ -20,7 +20,7 @@ from trainer import views
 
 urlpatterns = [
   
-    path('trainer_homepage',views.trainer_homepage,name='trainer_homepage')
+    path('trainer-homepage',views.trainer_homepage,name='trainer_homepage')
    
 ]
 

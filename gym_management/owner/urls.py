@@ -20,7 +20,10 @@ from owner import views
 
 urlpatterns = [
   
-    path('users-list',views.users_list,name='users-list'),
-    path('approve_user/<int:user_id>/',views.approve_user,name='approve_user')
+    path('users-list',views.users_list,name='users_list'),
+    path('approve-user/<int:user_id>/',views.approve_user,name='approve_user'),
+    path('student_details',views.student_details,name='student_details'),
+    path('trainer_details',views.trainer_details,name='trainer_details'),
+    path('operations',views.operations,name='operations'),
 ]
 
