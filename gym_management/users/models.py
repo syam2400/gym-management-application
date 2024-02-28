@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
     ]
     GOALS = [
         ('LOSE','Weight lose'),

@@ -89,7 +89,7 @@ def user_login(request):
                         return redirect('trainer_homepage')
                     elif user.is_superuser :
                         login(request, user)
-                        return redirect('users-list')
+                        return redirect('users_list')
                     else :
                          error_messages = "invalid credentials"
                          return render(request, 'user_login.html', {'error_messages':  error_messages})
@@ -99,4 +99,9 @@ def user_login(request):
         else:
                 return HttpResponseForbidden("Invalid login credentials.")
     else:
-        return render(request, 'user_login.html')
+        return render(request,'user_login.html')
+    
+    
+def user_logout(request):
+    logout(request)
+    return  user_login(request)
