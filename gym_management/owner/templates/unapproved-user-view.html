@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Initially disable the submit button
+    var submitButton = document.getElementById('submit_{{ new_reg_user.id }}');
+    submitButton.disabled = true;
+
+    // Enable submit button when the checkbox state changes
+    document.getElementById('is_paid_{{ new_reg_user.id }}').addEventListener('change', function() {
+        submitButton.disabled = false;
+    });
+});
+</script>
+
+<!-- Display messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div>{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+{% if new_reg_user.is_student %}
+  <h1>Student</h1>
+{% elif new_reg_user.is_trainer %}
+  <h1>Trainer</h1>
+{% else %}
+  <h1>Invalid User</h1>
+{% endif %}
+<h1>{{ new_reg_user.username }}</h1>
+{{ new_reg_user.gender }}
+{{ new_reg_user.age }}
+
+<form method="post" action="{% url 'update_payment_status' new_reg_user.id %}">
+    {% csrf_token %}
+    <!-- Hidden input for form submission indication -->
+    <input type="hidden" name="payment_status_submitted" value="true">
+    <!-- Checkbox for paid status -->
+    <input type="checkbox" name="is_paid" id="is_paid_{{ new_reg_user.id }}" {% if new_reg_user.is_paid %}checked{% endif %}>
+    <label for="is_paid_{{ new_reg_user.id }}">Paid</label>
+    <!-- Update button -->
+    <button type="submit" id="submit_{{ new_reg_user.id }}">Update</button>
+</form>
+
+{% endblock %}
