@@ -5,38 +5,136 @@
 <h1>Owner homepage</h1>
 
 <h2>User List</h2>
+<br>
+<h3>
+    {% if message %}
+    {{ message }}
+    {% endif %}
+</h3>
+<br>
+<h1>student users</h1>
 <table class="table responsive-table">
     <thead>
         <tr>
             <th>Username</th>
             <th>Email</th>
-            <th>Approval Status</th>
-            <!-- Add a new column for action -->
+           
+            <th>Payment status</th>
+            <th>view</th>
+            <th>Approval status</th>
+             
         </tr>
     </thead>
-
-        {% for user in users %}
+    <tbody>    
+        {% for user in student_users %}
         <tr>
             <td>{{ user.username }}</td>
             <td>{{ user.email }}</td>
-
+            
             <td>
-                {% if not user.is_approved %}
-                <form method="post" action="{% url 'approve_user' user.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Pending</button>
-                </form>
+                {% if user.is_paid %}
+                <h4>paid</h4>
                 {% else %}
-                <button type="button">Approved</button>
+                <h4>unpaid</h4>
                 {% endif %}
             </td>
+            <td>
+                <a href="{% url 'user_details' user.id %}">
+                    <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+                </a>
+            </td>
+            <td>
+             
+                <form method="post" action="{% url 'approve_user' user.id  %}">
+                                  {% csrf_token %}
+                                 <input type="hidden" name="housemaid_id" value="{{ housemaid.id }}">
+                    
+                                 <select name="status">
+                                    {% if not user.is_approved %}
+                                   <option value="">pending</option>
+                                   <option value="approve">Approve</option>
+                                   <option value="rejected" >Reject</option>
+                                   {% else %}
+                                   <option value="">Approved</option>
+                                   <option value="rejected" >Reject</option>
+                                   {% endif %}
+                                 </select>
+                                 <button type="submit">Update Status</button>
+                   </form> 
+               
+                
+               
+            </td>
+            
         </tr>
         {% endfor %}
-
+    </tbody>
 </table>
 
 
-<div>
-    
+<h1>Trainer users</h1>
+<table class="table responsive-table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>position</th>
+            <th>Payment status</th>
+            <th>view</th>
+            <th>Approval status</th>
+             
+        </tr>
+    </thead>
+    <tbody>    
+        {% for user in trainer_users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td> {% if user.is_trainer %}
+                <h3>trainer</h3>
+                {% elif user.is_student %}
+                <h3>student</h3>
+                {% else %}
+                <h1></h1>
+                {% endif %}
+            </td>
+            <td>
+                {% if user.is_paid %}
+                <h4>paid</h4>
+                {% else %}
+                <h4>unpaid</h4>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'user_details' user.id %}">
+                    <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
+                </a>
+            </td>
+            <td>
+             
+                <form method="post" action="{% url 'approve_user' user.id  %}">
+                                  {% csrf_token %}
+                                 <input type="hidden" name="housemaid_id" value="{{ housemaid.id }}">
+                    
+                                 <select name="status">
+                                    {% if not user.is_approved %}
+                                   <option value="">pending</option>
+                                   <option value="approve">Approve</option>
+                                   <option value="rejected" >Reject</option>
+                                   {% else %}
+                                   <option value="">Approved</option>
+                                   <option value="rejected" >Reject</option>
+                                   {% endif %}
+                                 </select>
+                                 <button type="submit">Update Status</button>
+                   </form> 
+               
+                
+               
+            </td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
-    

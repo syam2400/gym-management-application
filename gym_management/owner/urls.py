@@ -22,6 +22,9 @@ urlpatterns = [
   
     path('users-list',views.users_list,name='users_list'),
     path('approve-user/<int:user_id>/',views.approve_user,name='approve_user'),
+    path('user-details/<int:pk>/',views.user_detail_view,name='user_details'),
+    path('update_payment_status/<int:pk>/',views.update_payment_status,name='update_payment_status'),
+
     path('student_details',views.student_details,name='student_details'),
     path('trainer_details',views.trainer_details,name='trainer_details'),
     path('operations',views.operations,name='operations'),

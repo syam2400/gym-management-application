@@ -6,7 +6,7 @@
 
 <style>
     table {
-        width: 100%;
+        width: 70%;
         border-collapse: collapse;
     }
     th, td {
@@ -37,6 +37,7 @@
             <th>  qualification</th>
             <th>experience_years</th>
             <th>Phone</th>
+            <th>assigned students</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +50,7 @@
             <td>{{ user.qualification}}</td>
             <td>{{ user.experience_years}}</td>
             <td>{{ user.phone}}</td>
+            <td></td>
         </tr>
         {% endfor %}
     </tbody>
