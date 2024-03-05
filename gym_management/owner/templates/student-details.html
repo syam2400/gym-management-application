@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'admin-dashbord.html' %}
 {% load static %}
 {% block content %}
 
@@ -42,13 +42,17 @@
     <tbody>
         {% for user in student_users %}
         <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.age }}</td>
-            <td>{{ user.gender}}</td>
-            <td>{{ user.goal }}</td>
-            <td>{{ user.fitness_level }}</td>
-            <td>{{ user.phone }}</td>
-            <td></td>
+            <td>{{ user.student.username }}</td>
+            <td>{{ user.student.age }}</td>
+            <td>{{ user.student.gender}}</td>
+            <td>{{ user.student.goal }}</td>
+            <td>{{ user.student.fitness_level }}</td>
+            <td>{{ user.student.phone }}</td>
+            <td>
+               {% for trainer in user.assigned_trainer.all %}
+               {{trainer}}
+               {% endfor %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

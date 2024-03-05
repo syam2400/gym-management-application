@@ -1,3 +1,283 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Gym trainer | Template </title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'asset/img/favicon.ico' %}">
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/gijgo.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/animated-headline.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  
+    <!-- login links -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <!--Stylesheet-->
+</head>
+
+<body class="black-bg">
+  <!-- ? Preloader Start -->
+  <div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="preloader-inner position-relative">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img pere-text">
+          <img src="{% static 'assets/img/logo/loder.png' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Preloader Start -->
+  <header >
+    <!-- Header Start -->
+    <div class="header-area header-transparent">
+      <div class="main-header header-sticky">
+        <div class="container-fluid">
+          <div class="menu-wrapper d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="logo">
+              <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+            </div>
+            <!-- Main-menu -->
+            <div class="main-menu f-right d-none d-lg-block">
+              <nav>
+                <ul id="navigation">
+                  {% if user.is_authenticated %}
+                  {% if user.is_student %}
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'students_homepage' %}">student HOME</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li>
+
+
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'trainer_homepage' %}">Trainer HOME</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li>
+
+                
+                  <!-- <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users_list' %}">admin HOME</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student_details' %}">students-details</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'trainer_details' %}">Trainer details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'operations' %}">operations</a>
+                  </li>
+
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                  </li> -->
+                  {% endif %}
+
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">SignUp</a>
+                  </li>
+                
+                  <li><a href="gallery.html">Gallery</a></li>
+                  <li><a href="blog.html">Blog</a>
+                    <ul class="submenu">
+                      <li><a href="blog.html">Blog</a></li>
+                      <li><a href="blog_details.html">Blog Details</a></li>
+                      <li><a href="elements.html">Elements</a></li>
+                    </ul>
+                  </li>
+                
+                </ul>
+              </nav>
+            </div>
+            <!-- Header-btn -->
+            <div class="header-btns d-none d-lg-block f-right">
+              <a href="contact.html" class="btn">Contact me</a>
+            </div>
+
+            {% endif %}
+            <!-- Mobile Menu -->
+            <div class="col-12">
+              <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Header End -->
+  </header>
+
+  {% block content %}
+  {% endblock %}
+  <footer>
+    <!--? Footer Start-->
+    <div class="footer-area black-bg">
+      <div class="container">
+        <div class="footer-top footer-padding">
+          <!-- Footer Menu -->
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="single-footer-caption mb-50 text-center">
+                <!-- logo -->
+                <div class="footer-logo wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                  <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                </div>
+                <!-- Menu -->
+                
+
+
+                <!-- social -->
+                <div class="footer-social mt-30 wow fadeInUp" data-wow-duration="3s" data-wow-delay=".8s">
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="row d-flex align-items-center">
+            <div class="col-lg-12">
+              <div class="footer-copy-right text-center">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;
+                  <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+                  with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                    target="_blank">Colorlib</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End-->
+  </footer>
+  <!-- Scroll Up -->
+  <div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+  </div>
+
+  <!-- JS here -->
+
+  <script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+  <!-- Jquery, Popper, Bootstrap -->
+  <script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+  <script src="{% static 'assets/js/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+  <!-- Jquery Mobile Menu -->
+  <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+
+  <!-- Jquery Slick , Owl-Carousel Plugins -->
+  <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'assets/js/slick.min.js' %}"></script>
+  <!-- One Page, Animated-HeadLin -->
+  <script src="{% static 'assets/js/wow.min.js' %}"></script>
+  <script src="{% static 'assets/js/animated.headline.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+
+  <!-- Date Picker -->
+  <script src="{% static 'assets/js/gijgo.min.js' %}"></script>
+  <!-- Nice-select, sticky -->
+  <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+
+  <!-- counter , waypoint,Hover Direction -->
+  <script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
+  <script src="{% static 'assets/js/waypoints.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.countdown.min.js' %}"></script>
+  <script src="{% static 'assets/js/hover-direction-snake.min.js' %}"></script>
+
+  <!-- contact js -->
+  <script src="{% static 'assets/js/contact.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.form.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
+  <script src="{% static 'assets/js/mail-script.js' %}"></script>
+  <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+  <!-- Jquery Plugins, main Jquery -->
+  <script src="{% static 'assets/js/plugins.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -7,7 +287,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gym management</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
@@ -101,8 +381,7 @@
       </div>
     </div>
   </nav>
-  {% block content %}
-  {% endblock %}
+
 </body>
 
-</html>
+</html> -->

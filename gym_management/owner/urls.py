@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('student_details',views.student_details,name='student_details'),
     path('trainer_details',views.trainer_details,name='trainer_details'),
-    path('operations',views.operations,name='operations'),
+    path('operations/',views.operations,name='operations'),
+    path('assign_trainers/<int:pk>/',views.assign_trainers,name='assign_trainers'),
 ]
 

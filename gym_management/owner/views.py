@@ -92,17 +92,18 @@ def update_payment_status(request, pk):
 
 
 def student_details(request):
-      student_users =CustomUser.objects.filter(is_student=True)
+      student_users =StudentProfile.objects.all()
 
       return render(request,'student-details.html',{'student_users': student_users})
       
 def trainer_details(request):
-      trainer_users =CustomUser.objects.filter(is_trainer=True)
-
-      return render(request,'trainer-detail.html',{'trainer_users':  trainer_users})
+      trainer_users =TrainerProfile.objects.all()
+      # assigned_students = trainer_users.assigned_students
+      return render(request,'trainer-detail.html',{'trainer_users':  trainer_users })
       
 
 def operations(request):
+       
       get_trainers = TrainerProfile.objects.all()
       get_students = StudentProfile.objects.all()
       context = {
@@ -111,3 +112,14 @@ def operations(request):
       }
       return render(request,'operations.html',context)
 
+def assign_trainers(request,pk):
+      if request.method == 'POST':
+           assigned_trainer_id = request.POST.get('trainer')
+           assign_trainer = get_object_or_404(TrainerProfile, pk=assigned_trainer_id)
+
+           student = get_object_or_404(StudentProfile, pk=pk)
+           student.assigned_trainer.add(assign_trainer)
+           assign_trainer.assigned_students.add(student)
+           
+           return redirect('operations')
+          

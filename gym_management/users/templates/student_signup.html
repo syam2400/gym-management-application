@@ -2,7 +2,10 @@
 {% load static %}
 {% block content %}
 
-<h1>STUDENT REGISTRATION</h1>
+
+<section style="margin: 100px;margin-top: 150px;margin-inline: 300px;">
+
+    <h1>STUDENT REGISTRATION</h1>
 
 
 <form method="POST" action="{% url 'student_register' %}">
@@ -19,7 +22,7 @@
         <br>
         <input type="text" class="form-control" name="place" required placeholder="ENTER place">
         <br>
-
+     
         <!-- gender selection  -->
         <select name="gender" class="form-control">
             <option value="">Select your gender</option>
@@ -27,6 +30,9 @@
             <option value="female">Female</option>
             <option value="other">Other</option>
         </select>
+        <br>
+        <br>
+        <br>
         <br>
         <!-- Fitness Level Field -->
         <select name="fitness_level" class="form-control" required>
@@ -36,6 +42,10 @@
             <option value="Advanced">Advanced</option>
         </select>
         <br>
+        <br>
+        <br>
+        <br>
+        
         <!-- Goals Field -->
         <select name="goal" class="form-control" required>
             <option value="">Select your goal</option>
@@ -45,19 +55,22 @@
         </select>
     </div>
     <br>
-
-    </div>
     <br>
+
+    
+    </div>
+ 
     <div class="mb-3">
 
         <input type="password" class="form-control" name="password" required>
     </div>
 
 
-    <br>
-    <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
+
+    
+</section>
 
 {% endblock %}
