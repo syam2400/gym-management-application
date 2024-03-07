@@ -1,8 +1,103 @@
-{% extends 'base.html' %}
+{% extends 'admin-dashbord.html' %}
 {% load static %}
 {% block content %}
 
 
 <h1>operations</h1>
+
+
+
+<style>
+    table {
+        width: 70%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+</style>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th> phone</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Goal </th>
+            <th>Fitness Level</th>
+            <th>Paid or unpaid</th>
+            <th>assigning trianer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in get_students %}
+        <tr>
+            <td>{{ student.student.username }}</td>
+            <td>{{ student.student.phone}}</td>
+            <td>{{ student.student.age }}</td>
+            <td>{{ student.student.gender}}</td>
+            <td>{{ student.student.goal }}</td>
+            <td>{{ student.student.fitness_level }}</td>
+            <td>
+                {% if student.student.is_paid %}
+                <h4>paid</h4>
+                {% endif %}
+            </td>
+
+            <td>
+                <form method="post" action="{% url 'assign_trainers' student.id %}">
+                    {% csrf_token %}
+                    <select name="trainer" id="trainer-dropdown">
+
+                        {% if student.assigned_trainer.all %}
+                        {% for trainer in student.assigned_trainer.all %}
+                        <option value="">{{trainer.trainer.username}}</option>
+                        {% endfor %}
+                        <option value="">-----------</option> <!-- Divider -->
+                        {% else %}
+
+                        <option value="">Select a Trainer</option>
+                        {% for trainer in get_trainers %}
+                        <option value="{{ trainer.id }}">{{ trainer.trainer.username }}</option>
+                        {% endfor %}
+
+                        {% endif %}
+                    </select>
+                    <input type="submit" value="Assign Trainer">
+
+                </form>
+
+            </td>
+
+
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+<br>
+<br>
+
 
 {% endblock %}

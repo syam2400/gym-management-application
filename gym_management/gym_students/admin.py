@@ -1,3 +1,4 @@
 from django.contrib import admin
+from gym_students.models import *
 
-# Register your models here.
+admin.site.register(StudentProfile)

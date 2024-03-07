@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'admin-dashbord.html' %}
 {% load static %}
 {% block content %}
 
@@ -6,7 +6,7 @@
 
 <style>
     table {
-        width: 100%;
+        width: 70%;
         border-collapse: collapse;
     }
     th, td {
@@ -37,18 +37,25 @@
             <th>  qualification</th>
             <th>experience_years</th>
             <th>Phone</th>
+            <th>assigned students</th>
         </tr>
     </thead>
     <tbody>
         {% for user in trainer_users%}
         <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.age }}</td>
-            <td>{{ user.gender}}</td>
-            <td>{{ user.specialization }}</td>
-            <td>{{ user.qualification}}</td>
-            <td>{{ user.experience_years}}</td>
-            <td>{{ user.phone}}</td>
+            <td>{{ user.trainer.username }}</td>
+            <td>{{ user.trainer.age }}</td>
+            <td>{{ user.trainer.gender}}</td>
+            <td>{{ user.trainer.specialization }}</td>
+            <td>{{ user.trainer.qualification}}</td>
+            <td>{{ user.trainer.experience_years}}</td>
+            <td>{{ user.trainer.phone}}</td>
+            <td> 
+                {% for student in user.assigned_students.all %}
+                {{student}}
+                <br>
+                {% endfor %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

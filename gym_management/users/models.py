@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
 class CustomUser(AbstractUser):
     GENDER_CHOICES = [
         ('Male', 'Male'),
@@ -24,7 +25,7 @@ class CustomUser(AbstractUser):
     place = models.CharField(max_length=30,null=True,blank=True)
 
     #this fields is for trianers registration  
-    bio = models.TextField(null=True, blank=True)
+ 
     specialization = models.CharField(max_length=30,null=True,blank=True)
     experience_years = models.IntegerField(null=True, blank=True)
     certifications = models.CharField(max_length=50,null=True, blank=True)
@@ -37,9 +38,13 @@ class CustomUser(AbstractUser):
     is_approved= models.BooleanField(default=False)
     is_trainer = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
+   
+                                         
  
     
     def __str__(self):
         return self.username
-    
-    
+
+
+
