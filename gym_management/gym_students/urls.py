@@ -19,7 +19,8 @@ from django.urls import path
 from gym_students import views
 
 urlpatterns = [
-    path("students-homepage/",views.students_homepage,name='students_homepage')
+    path("students-homepage/",views.students_homepage,name='students_homepage'),
+    path("<str:slug>/", views.room, name="room"),
   
 ]
 
