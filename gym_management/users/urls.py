@@ -21,6 +21,7 @@ from users import views
 urlpatterns = [
   
     path('',views.home,name='home'),
+    path('contact-page',views.contact_page,name='contact'),
     path('register', views.registration_redirection,name='register'), #connects to a common registration button
     path('trainer_register', views.trainer_registeration_form,name='trainer_register'),
     path('student_register', views.student_registeration_form,name='student_register'),

@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from users.models import CustomUser
+from users.models import *
 from trainer.models import *
 from gym_students.models import *
 from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse
+from owner.models import *
 
 
 def users_list(request):
@@ -123,3 +124,23 @@ def assign_trainers(request,pk):
            
            return redirect('operations')
           
+
+def user_enquiry(request):
+     if request.method == 'POST':
+          description = request.POST.get('description')
+          name = request.POST.get('name')
+          email = request.POST.get('email')
+          subject = request.POST.get('subject')
+
+          enquiry_obj = CustomerEnquiry.objects.create(description=description,name=name,email=email,subject=subject)
+          if enquiry_obj:
+               messages.success(request, 'Enquiry successfully created an executive willconatct you soon')
+          return redirect('contact')
+     else:
+          
+        return render(request,'contact.html',{'enquiry_obj':enquiry_obj})
+          
+
+def all_cus_enquiries(request):
+     enquiry_data = CustomerEnquiry.objects.all()
+     return render(request,'enquiry-details.html',{'enquiry_data':enquiry_data})

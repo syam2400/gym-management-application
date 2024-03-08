@@ -29,5 +29,7 @@ urlpatterns = [
     path('trainer_details',views.trainer_details,name='trainer_details'),
     path('operations/',views.operations,name='operations'),
     path('assign_trainers/<int:pk>/',views.assign_trainers,name='assign_trainers'),
+    path('enquiry',views.user_enquiry,name='enquiry'),
+    path('view_enquiry_data',views.all_cus_enquiries,name='view_enquiry_data'),
 ]
 

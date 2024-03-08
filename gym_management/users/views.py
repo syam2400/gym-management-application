@@ -2,10 +2,14 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, authenticate, logout
 from .models import CustomUser
-
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 def home(request):
     return render(request,'index.html')
+
+def contact_page(request):
+     return render(request,'contact.html')
 
 # when signup button clicks it will redirect to user registeration button page
 def registration_redirection(request):
@@ -71,19 +75,27 @@ def trainer_registeration_form(request):
 
 
 
-
+@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+
+        # try:
+        #      request.user.is_authenticated()
+        # except:
+        #       messages.info(request, 'You are already logged in. Please log out if you want to log in to another account.')
+        #       return redirect('user_login') 
+
         user = authenticate(username=username,password=password)
-      
-        if user is not None:
+        
+       
+        if user is not None :
             if user.is_approved :
                     if user.is_student :
                         login(request, user)
-                        return redirect('students_homepage')
+                        return redirect('student_homepage')
                     elif user.is_trainer :
                         login(request, user)
                         return redirect('trainer_homepage')

@@ -1,0 +1,54 @@
+{% extends 'admin-dashbord.html' %}
+{% load static %}
+{% block content %}
+
+    <style>
+        table {
+            width: 70%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #04AA6D;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+    <section style="margin-top: 2px;margin-left: 2px; background-color: rgb(28, 32, 34);padding: 10px;">
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>email</th>
+                <th>subject</th>
+                <th>description</th>             
+               
+            </tr>
+        </thead>
+        <tbody>
+            {% for enq in  enquiry_data  %}
+            <tr>
+                <td>{{ enq.name }}</td>
+                <td>{{ enq.email  }}</td>
+                <td>{{enq.subject }}</td>
+                <td>{{enq.description  }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+</section>
+
+{% endblock %}

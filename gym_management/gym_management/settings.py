@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-xok*edgo3!jst@$tr-4p4k+bl%4zy88fcal!k7uxncwov!nfmy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles','users','owner','trainer','gym_students',
-     'channels',
+    'django.contrib.staticfiles',
+    'users',
+    'owner',
+    'trainer',
+    'gym_students',
+    'channels',
+    'django_extensions',
+    'social_django',
    
 ]
 
@@ -53,6 +59,14 @@ CHANNEL_LAYERS = {
 }
 
 
+# backend credentials for google social auth
+AUTHENTICATION_BACKENDS = [
+     'social_core.backends.google.GoogleOAuth2',
+     'social_core.backends.facebook.FacebookOAuth2',
+     'django.contrib.auth.backends.ModelBackend',
+]
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,6 +75,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    # 'gym_management.users.custom_middleware.CustomCsrfViewMiddleware'
 ]
 
 ROOT_URLCONF = 'gym_management.urls'
@@ -146,3 +162,12 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+# credentials for google social auth
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '871151238293-1ua8ep1l3ntl81vq632ri1c8e19eopit.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+# Redirect URL after authentication
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'  # Redirect to this URL after successful login
+
+SOCIAL_AUTH_LOGOUT_REDIRECT_URL = '/'

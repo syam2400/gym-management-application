@@ -4,12 +4,22 @@
 
 
 <style>
+      .user-detail-container {
+    background-color: #1c2022;
+    color: #fff;
+   
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding-bottom: 500px;
+  }
     table {
         width: 70%;
         border-collapse: collapse;
     }
     th, td {
-        border: 1px solid #ddd;
+        border: 1px solid #8b8b8b;
         padding: 8px;
         text-align: left;
     }
@@ -18,14 +28,15 @@
         color: white;
     }
     tr:nth-child(even) {
-        background-color: #f2f2f2;
+        background-color: #514f4f;
     }
     tr:hover {
         background-color: #ddd;
     }
 </style>
 
-
+<section style="margin-top: 2px;margin-left: 2px; background-color: rgb(28, 32, 34);padding: 10px;">
+<div class="user-detail-container">
 <table>
     <thead>
         <tr>
@@ -57,6 +68,9 @@
         {% endfor %}
     </tbody>
 </table>
+
+</div>
+</section>
 
 
 {% endblock %}

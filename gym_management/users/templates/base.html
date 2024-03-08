@@ -78,10 +78,10 @@
                   {% if user.is_student %}
 
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'students_homepage' %}">student HOME</a>
+                    <a class="nav-link" href="{% url 'student_homepage' %}">student HOME</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="{% url 'student_profile' %}">MyProfile</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -101,28 +101,11 @@
                   </li>
 
                 
-                  <!-- <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users_list' %}">admin HOME</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'student_details' %}">students-details</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'trainer_details' %}">Trainer details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'operations' %}">operations</a>
-                  </li>
-
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                  </li> -->
+                  
                   {% endif %}
 
                   {% else %}
+                  
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}">Home</a>
                   </li>
@@ -141,16 +124,17 @@
                       <li><a href="elements.html">Elements</a></li>
                     </ul>
                   </li>
-                
+                {% endif %}
                 </ul>
               </nav>
             </div>
             <!-- Header-btn -->
             <div class="header-btns d-none d-lg-block f-right">
-              <a href="contact.html" class="btn">Contact me</a>
-            </div>
+              <a href="{% url 'contact' %}" class="btn" style="height: 40px;width: 200px; display: flex;
+              align-items: center;justify-content: center;background-color: rgb(63, 21, 21);color: white;border-color: white;">Contact me</a>
+          </div>
 
-            {% endif %}
+          
             <!-- Mobile Menu -->
             <div class="col-12">
               <div class="mobile_menu d-block d-lg-none"></div>
@@ -166,16 +150,16 @@
   {% endblock %}
   <footer>
     <!--? Footer Start-->
-    <div class="footer-area black-bg">
+    <div class="footer-area black-bg" >
       <div class="container">
-        <div class="footer-top footer-padding">
+        <div class="footer-top footer-padding" >
           <!-- Footer Menu -->
           <div class="row">
             <div class="col-xl-12">
               <div class="single-footer-caption mb-50 text-center">
                 <!-- logo -->
                 <div class="footer-logo wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-                  <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                  <a href="index.html"><img src="{% static 'assets/img/logo/logo2_footer.png' %}" alt=""></a>
                 </div>
                 <!-- Menu -->
                 
@@ -328,7 +312,7 @@
           {% if user.is_student %}
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'students_homepage' %}">student HOME</a>
+            <a class="nav-link" href="">student HOME</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Features</a>

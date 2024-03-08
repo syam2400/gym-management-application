@@ -7,6 +7,7 @@ from gym_students.models import  *
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_slug']
+       
         self.roomGroupName = 'chat_%s' % self.room_name
         
         await self.channel_layer.group_add(

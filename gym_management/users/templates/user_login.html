@@ -19,7 +19,7 @@
 
     .background {
         width: 430px;
-        height: 520px;
+        height: 90px;
         position: absolute;
         transform: translate(-50%, -50%);
         left: 50%;
@@ -143,7 +143,11 @@
     }
 </style>
 
-<section class="container-fluid" style="height: 500px; padding-top: 100px;padding-bottom: 500px;">
+<section class="container-fluid" style="height: 500px; padding-top: 50px;padding-bottom: 800px;">
+
+
+
+
 
     <div class="background">
         <div class="shape"></div>
@@ -154,6 +158,8 @@
     <h3>{{error_messages}}</h3>
     {% endif %}
 
+
+    
     <form method="POST" action="{% url 'user_login' %}">
      {% csrf_token %}
         <h3>Login Here</h3>
@@ -165,42 +171,18 @@
         <input type="password" name="password" placeholder="Password" id="password">
 
         <button type="submit">Log In</button>
-        <div class="social">
-            <div class="go"><i class="fab fa-google"></i> Google</div>
+        <a href="{% url 'social:begin' 'google-oauth2' %}"> <div class="social">
+           <div class="go"><i class="fab fa-google"></i> Google</div></a>
             <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
         </div>
     </form>
+  
 
 
 </section>
 
 
 
-
-<!-- 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="mt-5">Login</h2>
-            {% if error_messages %}
-             {{error_messages}}
-            {% endif %} -->
-<!-- 
-            <form method="post" action="{% url 'user_login' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" placeholder="Enter username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control"  name="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-        </div>
-    </div>
-</div> -->
 
 
 

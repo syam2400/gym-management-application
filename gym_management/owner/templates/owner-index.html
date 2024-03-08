@@ -1,18 +1,81 @@
 {% extends 'admin-dashbord.html' %}
 {% load static %}
 {% block content %}
+<style>
+    /* Scoped CSS for content block */
+    .content-section {
+        color: #f5f5f5;
+        background-color: #1c2022;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        padding-bottom: 250px;
+    }
 
+    .content-section h1, .content-section h2, .content-section h3, .content-section h4 {
+        color: #fff;
+    }
 
+    .table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
 
-<button><a href="{% url 'students_homepage' %}">got chat</a></button>
+    .table, .table th, .table td {
+        border: 1px solid #dee2e6;
+    }
 
+    .table th, .table td {
+        text-align: left;
+        padding: 8px;
+    }
 
-<section >
+    .table th {
+        background-color: #383b3d;
+        color: white;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #544e4e;
+    }
+
+    .table tr:hover {
+        background-color: #545050;
+    }
+
+    .form-select, .form-submit {
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #34373a;
+    }
+
+    .form-submit {
+        background-color: #292d31;
+        color: white;
+        cursor: pointer;
+    }
+
+    .form-submit:hover {
+        background-color: #0056b3;
+    }
+
+    a.view-detail {
+        color: #343d47;
+        text-decoration: none;
+    }
+
+    a.view-detail:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<section class="content-section">
 
     <h1>Owner homepage</h1>
-
     <h2>User List</h2>
-    <br>
+  
     <h3>
         {% if message %}
         {{ message }}
@@ -83,10 +146,10 @@
     <table class="table responsive-table">
         <thead>
             <tr>
-                <th>Username</th>
+                <th>Name</th>
                 <th>Email</th>
                 <th>position</th>
-                <th>Payment status</th>
+             
                 <th>view</th>
                 <th>Approval status</th>
 
@@ -105,13 +168,7 @@
                     <h1></h1>
                     {% endif %}
                 </td>
-                <td>
-                    {% if user.is_paid %}
-                    <h4>paid</h4>
-                    {% else %}
-                    <h4>unpaid</h4>
-                    {% endif %}
-                </td>
+                
                 <td>
                     <a href="{% url 'user_details' user.id %}">
                         <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->

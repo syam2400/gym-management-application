@@ -1,206 +1,199 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
+{% block content %} 
 
 <style>
   body {
-    background-color: #74EBD5;
-    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
-
-    min-height: 100vh;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+    padding: 20px;
   }
-
-  ::-webkit-scrollbar {
+  
+  .chat-container {
+    width: 100%;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 500px; /* Fixed height for the chat container */
+    margin: auto; /* Center the chat container on the page */
+  }
+  
+  .messages-box {
+    overflow-y: auto; /* Enable scrolling for the messages box */
+    padding: 15px;
+    flex-grow: 1;
+  }
+  
+  /* Scrollbar styling */
+  .messages-box::-webkit-scrollbar {
     width: 5px;
   }
-
-  ::-webkit-scrollbar-track {
-    width: 5px;
-    background: #f5f5f5;
+  .messages-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
   }
-
-  ::-webkit-scrollbar-thumb {
-    width: 1em;
-    background-color: #ddd;
-    outline: 1px solid slategrey;
-    border-radius: 1rem;
+  .messages-box::-webkit-scrollbar-thumb {
+    background: #ddd;
   }
-
-  .text-small {
-    font-size: 0.9rem;
+  .messages-box::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
   }
-
-  .messages-box,
-  .chat-box {
-    max-height: 300px;
-    /* Adjust the max-height as needed */
-    overflow-y: auto;
-    overflow-y: scroll;
+  
+  .message {
+    margin-bottom: 15px;
+    line-height: 1.4;
   }
-
-  .col-7.px-0 {
-    flex: 0 0 100%;
-    max-width: 100%;
+  
+  .sender, .receiver {
+    display: flex;
+    align-items: flex-end;
   }
-
-  .rounded-lg {
-    border-radius: 0.5rem;
+  
+  .message-text {
+    padding: 10px;
+    border-radius: 20px;
+    display: inline-block;
+    max-width: 70%;
   }
-
-  input::placeholder {
-    font-size: 0.9rem;
-    color: #999;
+  
+  .sender .message-text {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0;
   }
-
-  .form-control {
-    border-radius: 0.375rem;
+  
+  .receiver .message-text {
+    background-color: #e9ecef;
+    border-bottom-left-radius: 0;
   }
-
-  .btn-link {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
+  
+  .form-area {
+    border-top: 1px solid #eee;
+    padding: 10px;
+    display: flex;
+    width: 100%; /* Ensure the form area spans the entire width */
   }
-
-  .btn-link:hover {
-    color: #0056b3;
-    text-decoration: underline;
+  
+  input[type="text"] {
+    flex: 1; /* Allow the input to fill the available space */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px; /* Space between input and submit button */
   }
-</style>
-
-{% if user.is_authenticated %}
-<div class="container py-5 px-4" style="margin-top: 100px;">
-  <!-- For demo purpose-->
-
-
-  <div class="row rounded-lg overflow-hidden shadow">
-    <!-- Users box-->
-
-
-
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .chat-container {
+      width: 95%; /* Make the chat container wider on smaller screens */
+    }
+  }
+  </style>
     <!-- Chat Box-->
-    <div class="col-6 px-0">
-      {% if messages %}
-
-      <div class="px-4 py-5 chat-box bg-white" id="chatbox">
-        {% for message in messages %}
-        <!-- Sender Message-->
-        <div class="media w-50 mb-3"><img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user"
-            width="50" class="rounded-circle">
-          <div class="media-body ml-3 chat-message">{{ message.user.username }}
-            <div class="bg-light rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-muted">{{ message.content }}</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
-
-        <!-- Reciever Message-->
-        <div class="media w-50 ml-auto mb-3">
-          <div class="media-body">
-            <div class="bg-primary rounded py-2 px-3 mb-2">
-              <p class="text-small mb-0 text-white">{{ message.content }}</p>
-            </div>
-            <p class="small text-muted">12:00 PM | Aug 13</p>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      {% else %}
-
-      <div class="jumbotron" id="chatbox" style="padding: 4px 2px;">
-        <b style="color: white;">No Messages in this Room.</b>
-      </div>
-
-      {% endif %}
-      <!-- Typing area -->
-      <form action="#" class="bg-dark" style="color: white;">
-        <div class="input-group">
-          <input type="text" placeholder="Type a message" id="my_input"
-           class="form-control rounded-0 border-0 py-4 bg-light">
-
-          <div class="input-group-append">
-            <button id="submit_button" type="submit" value="send" class="btn btn-link">
-              <i  class="fa fa-paper-plane"></i>
-              </button>
-          </div>
-        </div>
-      </form>
-
-    </div>
-  </div>
-</div>
-
-
-
-<!--   
-  <div class="container" style="margin: 50px;margin-top: 150px;">
-    <div class="row d-flex justify-content-center">
-        <div class="col-12">
-            <div class="alert alert-info d-flex justify-content-between" role="alert">
-              <h5>ROOM :- {{room_name}}</h5>
-              <a href="{% url 'logout' %}">
-                <button type="button" class="btn btn-light">Click to Log Out</button>
-              </a>
-            </div>
-            <form>
-                <div class="form-group">
-                  {% if messages %}
-                  <div class="jumbotron" id="chatbox" style="padding: 4px 2px;max-height: 300px;  /* Adjust the max-height as needed */
-                  overflow-y: scroll;">
-                    
+    {% if user.is_authenticated %}
+    <div class="container py-5 px-4" style="margin-top: 100px;">
+      <div class="row rounded-lg overflow-hidden shadow">
+          <div class="col-6 px-0">
+              {% if messages %}
+                  <div class="px-4 py-5 chat-box bg-white fixed-height-chat" id="chatbox">
                       {% for message in messages %}
-                        <!-- <div class="chat-message {% if message.user == request.user %}text-right{% else %}text-left{% endif %}" style="color: rgb(255, 255, 255);">
-                          <b>{{ message.user.username }}</b> : {{ message.content }}<br>
-                        </div> -->
-<!-- 
-                        {% if message %}
-                        <h2>{{message.user.username}}: {{ message.content }}</h2>
-                        <br>
-
-                        {% endif %}
-                        {% endfor %}
-                    
-                    
+                          {% if message.user.username == request.user.username %}
+                              <div class="media w-50 ml-auto mb-3">
+                                  <div class="media-body">
+                                      <div class="bg-primary rounded py-2 px-3 mb-2">
+                                          <p class="text-small mb-0 text-white">{{ message.content }}</p>
+                                      </div>
+                                      <p class="small text-muted text-right">12:00 PM | Aug 13</p>
+                                  </div>
+                              </div>
+                          {% else %}
+                              <div class="media w-50 mb-3">
+                                  <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+                                  <div class="media-body ml-3">
+                                      <div class="bg-light rounded py-2 px-3 mb-2">
+                                          <p class="text-small mb-0 text-muted">{{ message.content }}</p>
+                                      </div>
+                                      <p class="small text-muted">12:00 PM | Aug 13</p>
+                                  </div>
+                              </div>
+                          {% endif %}
+                      {% endfor %}
                   </div>
-                  {% else %}
-                  <div class="jumbotron" id="chatbox" style="padding: 4px 2px;" ></div>
-                  <b style="color: white;">No Messages in this Room.</b>
-                    {% endif %}
-
-                </div>
-                <br/>
-                <div class="form-group" style="width: 100%;">
-                    <input class="form-control" placeholder="Enter text here" id="my_input" type="text" required></br>
-                </div>
-                <br/>
-                <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send">
-            </form>
-        </div>
-    </div>
-</div> -->
+              {% else %}
+                  <div class="jumbotron" id="chatbox" style="padding: 4px 2px;">
+                      <b style="color: white;">No Messages in this Room.</b>
+                  </div>
+              {% endif %}
+  
+              <form action="#" class="bg-dark" style="color: white;" onsubmit="sendMessage(event)">
+  
+                  <div class="input-group">
+                      <input type="text" placeholder="Type a message" id="my_input"
+                             class="form-control rounded-0 border-0 py-4 bg-light">
+  
+                      <div class="input-group-append">
+                          <button id="submit_button" type="submit" value="send" class="btn btn-link">
+                              <i class="fa fa-paper-plane"></i>
+                          </button>
+                      </div>
+                  </div>
+              </form>
+  
+          </div>
+      </div>
+  </div>
 
 
 {{slug|json_script:"room_slug"}}
 
 <script>
+  function sendMessage(event) {
+    console.log("sendMessage function called");
+    event.preventDefault(); 
+    var messageInput = document.querySelector("#my_input").value;
+
+    if (messageInput.length == 0) {
+      alert("Add some Input First Or Press Send Button!");
+    } else {
+      chatSocket.send(JSON.stringify({
+        message: messageInput,
+        username: "{{request.user.username}}",
+        room_name: "{{room_name}}"
+      }));
+      document.querySelector("#my_input").value = ''; // Clear the input field after sending
+    }
+  }
 
   const chatbox = document.querySelector("#chatbox");
 
-  // Function to scroll to the bottom of the chatbox
+
   function scrollToBottom() {
     chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  // Scroll to bottom when the page is loaded
   scrollToBottom();
 
 
   const roomName = JSON.parse(document.getElementById('room_slug').textContent);
 
   const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/" + roomName + "/");
-  // const chatSocket = new WebSocket("ws://127.0.0.1:8000/ws/"+ roomName +"/");
-  // alert(chatSocket);
+
   chatSocket.onopen = function (e) {
     console.log("The connection was setup successfully !");
   };
@@ -215,40 +208,40 @@
       document.querySelector("#submit_button").click();
     }
   };
-  document.querySelector("#submit_button").onclick = function (e) {
-    var messageInput = document.querySelector(
-      "#my_input"
-    ).value;
+ 
 
-    if (messageInput.length == 0) {
-      alert("Add some Input First Or Press Send Button!")
-    }
-    else {
-      chatSocket.send(JSON.stringify({ message: messageInput, username: "{{request.user.username}}", room_name: "{{room_name}}" }));
-
-
-    }
-
-  };
-
-  chatSocket.onmessage = function (e) {
+ chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    var div = document.createElement("div");
-    div.innerHTML = "<b>" + data.username + "</b> : " + data.message;
+    var messageElement = document.createElement("div");
+    messageElement.className = "media w-50 mb-3"; 
 
-    // Add class based on user authentication
+
     if (data.username === "{{ request.user.username }}") {
-      div.classList.add("chat-message", "text-right");
+        messageElement.className = "media w-50 ml-auto mb-3"; 
+        messageElement.innerHTML = `
+            <div class="media-body">
+                <div class="bg-primary rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-white">${data.message}</p>
+                </div>
+                <p class="small text-muted text-right">12:00 PM | Aug 13</p>
+            </div>
+        `;
     } else {
-      div.classList.add("chat-message", "text-left");
+        messageElement.innerHTML = `
+            <img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
+            <div class="media-body ml-3">
+                <div class="bg-light rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-muted">${data.message}</p>
+                </div>
+                <p class="small text-muted">12:00 PM | Aug 13</p>
+            </div>
+        `;
     }
 
-    document.querySelector("#my_input").value = "";
-    document.querySelector("#chatbox").appendChild(div);
+    document.querySelector("#chatbox").appendChild(messageElement);
     scrollToBottom();
-  };
+};
 </script>
-
 
 
 {% else %}
@@ -262,10 +255,7 @@
 </div>
 {% endif %}
 
-<br />
+<br>
 
 
-
-
-
-{% endblock %}
+{% endblock %} 

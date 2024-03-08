@@ -3,46 +3,91 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+  .user-detail-container {
+    background-color: #1c2022;
+    color: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .user-detail-header {
+    margin-bottom: 20px;
+  }
+
+  .user-detail-body p {
+    margin: 10px 0;
+  }
+
+  .user-detail-footer {
+    margin-top: 30px;
+  }
+
+  .user-detail-footer .form-check-input {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .user-detail-footer .submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+
+  .user-detail-footer .submit-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .user-detail-footer .submit-btn i {
+    margin-right: 5px;
+  }
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Initially disable the submit button
     var submitButton = document.getElementById('submit_{{ new_reg_user.id }}');
     submitButton.disabled = true;
 
-    // Enable submit button when the checkbox state changes
     document.getElementById('is_paid_{{ new_reg_user.id }}').addEventListener('change', function() {
-        submitButton.disabled = false;
+        submitButton.disabled = !this.checked;
     });
 });
 </script>
 
-<!-- Display messages -->
-{% if messages %}
-    {% for message in messages %}
-        <div>{{ message }}</div>
-    {% endfor %}
-{% endif %}
-
-{% if new_reg_user.is_student %}
-  <h1>Student</h1>
-{% elif new_reg_user.is_trainer %}
-  <h1>Trainer</h1>
-{% else %}
-  <h1>Invalid User</h1>
-{% endif %}
-<h1>{{ new_reg_user.username }}</h1>
-{{ new_reg_user.gender }}
-{{ new_reg_user.age }}
-
-<form method="post" action="{% url 'update_payment_status' new_reg_user.id %}">
-    {% csrf_token %}
-    <!-- Hidden input for form submission indication -->
-    <input type="hidden" name="payment_status_submitted" value="true">
-    <!-- Checkbox for paid status -->
-    <input type="checkbox" name="is_paid" id="is_paid_{{ new_reg_user.id }}" {% if new_reg_user.is_paid %}checked{% endif %}>
-    <label for="is_paid_{{ new_reg_user.id }}">Paid</label>
-    <!-- Update button -->
-    <button type="submit" id="submit_{{ new_reg_user.id }}">Update</button>
-</form>
+<div class="user-detail-container">
+  <div class="user-detail-header">
+    <h1>{{ new_reg_user.get_user_type_display }}</h1>
+  </div>
+  <div class="user-detail-body">
+    <p><strong>Name:</strong> {{ new_reg_user.username }}</p>
+    <p><strong>Gender:</strong> {{ new_reg_user.gender }}</p>
+    <p><strong>Age:</strong> {{ new_reg_user.age }}</p>
+    <p><strong>Phone:</strong> {{ new_reg_user.phone }}</p>
+  </div>
+  <div class="user-detail-footer">
+    <form method="post" action="{% url 'update_payment_status' new_reg_user.id %}">
+      {% csrf_token %}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="is_paid_{{ new_reg_user.id }}" name="is_paid" {% if new_reg_user.is_paid %}checked{% endif %}>
+        <label class="form-check-label" for="is_paid_{{ new_reg_user.id }}">Payment Received</label>
+      </div>
+      <button type="submit" id="submit_{{ new_reg_user.id }}" class="submit-btn">
+        <i class="fas fa-save"></i> Update Status
+      </button>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

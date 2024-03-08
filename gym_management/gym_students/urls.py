@@ -19,8 +19,11 @@ from django.urls import path
 from gym_students import views
 
 urlpatterns = [
-    path("students-homepage/",views.students_homepage,name='students_homepage'),
-    path("<str:slug>/", views.room, name="room"),
+    path("student_homepage/",views.students_homepage_view,name="student_homepage"),
+    path('student_profile/', views.students_profile_view,name="student_profile"),
+
+    path('chat_room_page/', views.chat_rooms_view,name="chat_rooms_page"),
+    path("<str:slug>/", views.room, name="room")
   
 ]
 

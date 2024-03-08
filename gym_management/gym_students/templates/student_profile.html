@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section style="margin: 100px;margin-top: 150px;margin-inline: 300px;">
+<div class="container-fluid  profile-container">
+    <div class=" child-container1">
+        <div class="profile-sec1">
+
+            <div class="div-profile-icon"><img style="height: 54px;flex: 1;" src="{% static 'images/user.png' %}"> </div>
+            <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                <div style="padding-top: 10px;">
+                    <div style="margin-top: 20px;">HELLO ,</div>
+                </div>
+                <div class="profile-name"> {{user.username}}</div>
+            </div>
+      
+        </div>
+
+        <div class="profile-sec2">
+           
+
+
+                <h2>Workout Details</h2>
+            
+                {% if data.exercises %}
+                    <div style="color: white;">
+                        {% for exercise in data.exercises %}
+                            <h3>{{ exercise.name }}</h3>
+                            <p>Equipment: {{ exercise.equipment }}</p>
+                            <p>Type: {{ exercise.exercise_type }}</p>
+                            <p>Experience Level: {{ exercise.experience }}</p>
+                            <p>Force Type: {{ exercise.force_type }}</p>
+                            <p>Mechanics: {{ exercise.mechanics }}</p>
+                            <p>Primary Muscles: {{ exercise.primary_muscles }}</p>
+                            <p>Secondary Muscles: {{ exercise.secondary_muscles }}</p>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No exercises found.</p>
+                {% endif %}
+                </section>
+                <section style="margin: 100px;margin-top: 150px;margin-inline: 300px;">
+            
+                    <h1>students homepage</h1>
+                    <a href="{% url 'chat_rooms_page' %}" ><div style="height: 100px;width: 100px; background-color: aqua;">chat</div></a>
+                  
+              
+        </div>
+
+    </div>
+
+    <div class="child-container2"></div>
+</div>
+</section>
+
+
+
+{% endblock %}

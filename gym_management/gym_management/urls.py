@@ -25,6 +25,8 @@ urlpatterns = [
     path('gym-owner/',include('owner.urls')),
     path('trainer/',include('trainer.urls')),
     path('gym-students/',include('gym_students.urls')),
+    path('auth/', include('social_django.urls', namespace='social')),
+
          
 ]
 
