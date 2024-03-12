@@ -11,6 +11,25 @@ def home(request):
 def contact_page(request):
      return render(request,'contact.html')
 
+def blog_page(request):
+     return render(request,'blog.html')
+
+def blog_elements_page(request):
+     return render(request,'blog-elements.html')
+
+def gallery_page(request):
+     return render(request,'gallery.html')
+
+def pricing_page(request):
+     return render(request,'pricing.html')
+
+def courses_page(request):
+     return render(request,'courses.html')
+
+def about_page(request):
+     return render(request,'about.html')
+
+
 # when signup button clicks it will redirect to user registeration button page
 def registration_redirection(request):
     return render(request,"register.html")
@@ -81,16 +100,8 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-
-        # try:
-        #      request.user.is_authenticated()
-        # except:
-        #       messages.info(request, 'You are already logged in. Please log out if you want to log in to another account.')
-        #       return redirect('user_login') 
-
         user = authenticate(username=username,password=password)
-        
-       
+            
         if user is not None :
             if user.is_approved :
                     if user.is_student :

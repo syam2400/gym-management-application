@@ -20,7 +20,10 @@ from trainer import views
 
 urlpatterns = [
   
-    path('trainer-homepage',views.trainer_homepage,name='trainer_homepage')
+    path('trainer-homepage',views.trainer_homepage,name='trainer_homepage'),
+    path('trainer_profile/', views.trainer_profile_view,name="trainer_profile"),
+    path('trainer_details/<int:pk>/', views.update_trainer_details,name="trainer_details"),
+    path("<str:slug>/", views.chat_room, name="chat_room")
    
 ]
 

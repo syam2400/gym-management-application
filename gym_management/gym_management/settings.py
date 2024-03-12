@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'channels',
     'django_extensions',
     'social_django',
+    'corsheaders',
    
 ]
 
@@ -75,9 +76,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     
     # 'gym_management.users.custom_middleware.CustomCsrfViewMiddleware'
 ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'gym_management.urls'
 
@@ -171,3 +177,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'  # Redirect to this URL after successful login
 
 SOCIAL_AUTH_LOGOUT_REDIRECT_URL = '/'
+
+
+KEY = 'rzp_test_X8BN2SrxMAsoqF'
+SECRET = 'PpCVnEzTqpX4bmfkDi1tl3Mn'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"

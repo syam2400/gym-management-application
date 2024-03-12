@@ -1,0 +1,261 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Gym trainer | Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="{% static 'assets/img/logo/loder.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <div class="header-area header-transparent" style="background-color: rgb(73, 25, 25);">
+        <div class="main-header header-sticky">
+            <div class="container-fluid">
+                <div class="menu-wrapper d-flex align-items-center justify-content-between">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                    </div>
+                    <!-- Main-menu -->
+                    <div class="main-menu f-right d-none d-lg-block">
+                        <nav>
+                            <ul id="navigation">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'trainer_homepage' %}">Trainer HOME</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'trainer_profile' %}">MyProfile</a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Header-btn -->
+                    <div class="header-btns d-none d-lg-block f-right">
+                        <a href="{% url 'contact' %}" class="btn">Contact me</a>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>
+
+<section style="margin-top: 130px;">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        width="150px"
+                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                        class="font-weight-bold">Edogaru</span><span
+                        class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12"><label class="labels">Username</label><input type="text"
+                                    class="form-control" placeholder="enter phone number"
+                                    value="{{user.student.username}}"></div>
+                            <div class="col-md-6"><label class="labels">Name</label><input type="text"
+                                    class="form-control" placeholder="first name" value=""></div>
+                            <div class="col-md-6"><label class="labels">Surname</label><input type="text"
+                                    class="form-control" value="" placeholder="surname"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text"
+                                    class="form-control" placeholder="enter phone number" value=""></div>
+                            <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text"
+                                    class="form-control" placeholder="enter address line 1" value=""></div>
+                            <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text"
+                                    class="form-control" placeholder="enter address line 2" value=""></div>
+                            <div class="col-md-12"><label class="labels">Postcode</label><input type="text"
+                                    class="form-control" placeholder="enter address line 2" value=""></div>
+                            <div class="col-md-12"><label class="labels">State</label><input type="text"
+                                    class="form-control" placeholder="enter address line 2" value=""></div>
+                            <div class="col-md-12"><label class="labels">Area</label><input type="text"
+                                    class="form-control" placeholder="enter address line 2" value=""></div>
+                            <div class="col-md-12"><label class="labels">Email ID</label><input type="text"
+                                    class="form-control" placeholder="enter email id" value=""></div>
+                            <div class="col-md-12"><label class="labels">Education</label><input type="text"
+                                    class="form-control" placeholder="education" value=""></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><label class="labels">Country</label><input type="text"
+                                    class="form-control" placeholder="country" value=""></div>
+                            <div class="col-md-6"><label class="labels">State/Region</label><input type="text"
+                                    class="form-control" value="" placeholder="state"></div>
+                        </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save
+                                Profile</button></div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit
+                            Experience</span><span class="border px-3 p-1 add-experience"><i
+                                class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text"
+                            class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text"
+                            class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+</section>
+
+<footer>
+    <!--? Footer Start-->
+    <div class="footer-area black-bg">
+        <div class="container">
+            <div class="footer-top footer-padding">
+                <!-- Footer Menu -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="single-footer-caption mb-50 text-center">
+                            <!-- logo -->
+                            <div class="footer-logo wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                                <a href="index.html"><img src="{% static 'assets/img/logo/logo2_footer.png' %}"
+                                        alt=""></a>
+                            </div>
+                            <!-- Menu -->
+
+                            <!-- social -->
+                            <div class="footer-social mt-30 wow fadeInUp" data-wow-duration="3s" data-wow-delay=".8s">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-12">
+                        <div class="footer-copy-right text-center">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                                template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End-->
+</footer>
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+
+
+<script>
+    document.getElementById('enquiryForm').addEventListener('submit', function () {
+        // Use setTimeout to ensure form is cleared after submission is processed
+        setTimeout(() => {
+            this.reset();
+        }, 0);
+    });
+
+    document.getElementById('enquiryForm').addEventListener('submit', function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault(); // Prevent the form from submitting
+            alert('Please fill in all required fields before submitting your enquiry.'); // Show an alert message
+        }
+        // If the form is valid, it will proceed with the submission
+    });
+</script>
+
+
+<script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<!-- Jquery Mobile Menu -->
+<script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/js/slick.min.js' %}"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="{% static 'assets/js/wow.min.js' %}"></script>
+<script src="{% static 'assets/js/animated.headline.js' %}"></script>
+
+<!-- Nice-select, sticky -->
+<script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+
+<!-- contact js -->
+<script src="{% static 'assets/js/contact.js' %}"></script>
+<script src="{% static 'assets/js/jquery.form.js' %}"></script>
+<script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'assets/js/mail-script.js' %}"></script>
+<script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="{% static 'assets/js/plugins.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

@@ -67,39 +67,35 @@ def update_payment_status(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     
     if request.method == "POST":
+        
         if 'payment_status_submitted' in request.POST:
-            is_paid_now = 'is_paid' in request.POST
-            # Check if there's an attempt to change the status
+            is_paid_now = 'is_paid' in request.POST    
             if user.is_paid and not is_paid_now:
-                # User was paid, now marking as unpaid
+               
                 user.is_paid = False
                 user.save()
                 messages.success(request, 'User marked as not paid.')
             elif not user.is_paid and is_paid_now:
-                # User was not paid, now marking as paid
+            
                 user.is_paid = True
                 user.save()
                 messages.success(request, 'Payment received.')
-            else:
-                # No change in status, provide appropriate feedback
+            else:   
                 messages.info(request, 'No changes were made to the payment status.')
-            
-            # Redirect to avoid post-redirect-get pattern issues
+           
             return redirect('update_payment_status', pk=pk)
-    # For GET requests or if 'payment_status_submitted' is not in POST data
-    context = {'new_reg_user': user}  # Assuming 'new_reg_user' is expected in the template
+
+    context = {'new_reg_user': user}  
     return render(request, 'unapproved-user-view.html', context)
 
 
 
 def student_details(request):
       student_users =StudentProfile.objects.all()
-
       return render(request,'student-details.html',{'student_users': student_users})
       
 def trainer_details(request):
       trainer_users =TrainerProfile.objects.all()
-      # assigned_students = trainer_users.assigned_students
       return render(request,'trainer-detail.html',{'trainer_users':  trainer_users })
       
 

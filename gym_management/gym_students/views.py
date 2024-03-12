@@ -1,37 +1,88 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from gym_students.models import *
+from django.contrib.auth.decorators import login_required
+
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseServerError
+import requests
+
+
 
 def students_homepage_view(request):
     
     return render(request,"students-index.html")
 
-import requests
+
 
 def students_profile_view(request):
-  
-
-    url = "https://exerciseapi3.p.rapidapi.com/exercise/name/push%20up"
-
-    headers = {
-        "X-RapidAPI-Key": "cac4259a1emsh8367cb09942567cp1f4ba6jsn9992c6509ff1",
-        "X-RapidAPI-Host": "exerciseapi3.p.rapidapi.com"
-    }
-
-    response = requests.get(url, headers=headers)
-    data=response.json()
-
-    print(response.json())
-    return render(request,"student_profile.html",{"data":  data})
-
-def chat_rooms_view(request):
+     
     rooms=Room.objects.all()
-   
-    return render(request, "chat-rooms.html",{'rooms':rooms})
-  
+    student_user = get_object_or_404(StudentProfile,student =request.user)
+    return render(request,"student_profile.html",{'student_user':student_user,'rooms':rooms})
 
-def room(request,slug):
-    room_name=Room.objects.get(slug=slug).name
+
+def chat_rooms_view(request,slug):
+    student_user = get_object_or_404(StudentProfile,student =request.user)
+    room_name=get_object_or_404(Room, slug=slug) 
     print(slug,room_name)
     messages=Message.objects.filter(room=Room.objects.get(slug=slug))
+   
+    return render(request,"student_profile.html",{"student_user":student_user,"room_name":room_name, "messages":messages,"slug":slug})
+
+@login_required
+def update_user_details(request,pk):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        print(username)
+        user_obj = get_object_or_404(StudentProfile,pk=pk)
+        user_obj.student.username=username
+        user_obj.student.save()
+        return redirect('student_profile')
+
+    user = get_object_or_404(StudentProfile,pk=pk)
+    return render(request,"edit-user-details.html",{'user': user})
+
+
+
+# payment_app/views.py
+
+def initiate_payment_view(request):
+    total = 1500
+   
+    amount = float(total) * 100  # Amount in paise
+    client = razorpay.Client(auth=(settings.KEY, settings.SECRET))
+
+    payment_data = {
+            "amount": amount,
+            "currency": "INR",
+            "receipt": "order_receipt01",
+          }
+
+    order = client.order.create(data=payment_data)
     
-    return render(request,"room.html",{"room_name":room_name, "messages":messages,"slug":slug})
+        # Include key, name, description, and image in the JSON response
+    response_data = {
+            "id": order["id"],
+            "amount": int(order["amount"])/100,
+            "currency": order["currency"],
+            "key": settings.KEY,
+            "name": "gym-app",
+            "description": "Payment for Your Product",
+            "image": "https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/06/shopping-online.jpg",  # Replace with your logo URL
+        }
+  
+    return render(request,"payment.html",{'data':response_data})
+
+
+# def update_profile(request):
+#     if request.method == "POST":
+#         username = request.POST.get('username')
+
+
+
+     
+    

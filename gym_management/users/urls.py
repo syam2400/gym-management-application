@@ -22,6 +22,14 @@ urlpatterns = [
   
     path('',views.home,name='home'),
     path('contact-page',views.contact_page,name='contact'),
+    path('blog/',views.blog_page,name='blog'),
+    path('blog-elements/',views.blog_elements_page,name='blog_elements'),
+    path('gallery/',views.gallery_page,name='gallery'),
+    path('pricing_page',views.pricing_page,name='pricing'),
+    path('courses/',views.courses_page,name='courses'),
+    path('about/',views.about_page,name='about'),
+
+
     path('register', views.registration_redirection,name='register'), #connects to a common registration button
     path('trainer_register', views.trainer_registeration_form,name='trainer_register'),
     path('student_register', views.student_registeration_form,name='student_register'),
