@@ -3,15 +3,7 @@
 {% block content %}
 
 
-<!-- payment_app/templates/payment.html --> 
- <!-- <div class="container-fluid" style="display: flex; flex-direction: column;padding: 10px;">
-    <h4>Order details</h4>
-    <div class="order-child-div1">Order id : {{data.id}}</div>
-    <div class="order-child-div1">Name :{{user_order_details.user.email}} </div>
-    <div class="order-child-div1">Delivery address : {{user_order_details.address}}</div>
-    <div class="order-child-div1">Phone Number : {{user_order_details.phone}}</div>
-    <div class="order-child-div1">amount : {{data.amount}}</div>
-</div> -->
+
 <H1>PAYMENT OPTIONS</H1>
 <br>
 <div  class="col-md-12" style="margin-top: 100px;height: 200px;display: flex;justify-content: center;align-items: center;">
@@ -30,9 +22,9 @@
         "description": "Test Transaction",
         "image": "https://example.com/your_logo",
         "order_id": "{{data.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": "http://127.0.0.1:8000/cart/payment-success/",
+        "callback_url": "http://127.0.0.1:8000/gym-students/payment-success/",
         "prefill": {
-            "name": "Gaurav Kumar",
+            "name": "Syam",
             "email": "gaurav.kumar@example.com",
             "contact": "9000090000"
         },

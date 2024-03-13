@@ -70,23 +70,19 @@ def update_payment_status(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     
     if request.method == "POST":
+        is_paid_now = 'is_paid' in request.POST  # Directly check if 'is_paid' checkbox is checked
         
-        if 'payment_status_submitted' in request.POST:
-            is_paid_now = 'is_paid' in request.POST    
-            if user.is_paid and not is_paid_now:
-               
-                user.is_paid = False
-                user.save()
-                messages.success(request, 'User marked as not paid.')
-            elif not user.is_paid and is_paid_now:
-            
-                user.is_paid = True
-                user.save()
+        if user.is_paid != is_paid_now:  # Check if the payment status has actually changed
+            user.is_paid = is_paid_now
+            user.save()
+            if is_paid_now:
                 messages.success(request, 'Payment received.')
-            else:   
-                messages.info(request, 'No changes were made to the payment status.')
-           
-            return redirect('update_payment_status', pk=pk)
+            else:
+                messages.success(request, 'User marked as not paid.')
+        else:
+            messages.info(request, 'No changes were made to the payment status.')
+        
+        return redirect('update_payment_status', pk=pk)  # Redirect to the appropriate URL
 
     context = {'new_reg_user': user}  
     return render(request, 'unapproved-user-view.html', context)
