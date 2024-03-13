@@ -46,12 +46,14 @@ def user_detail_view(request,pk):
       user_details = get_object_or_404(CustomUser, pk=pk)
       if user_details.is_trainer==True:
             new_reg_user = CustomUser.objects.get(pk=pk,is_trainer=True)
-
+            return render(request,'unapproved-user-view.html',{'new_reg_user': new_reg_user })
+            
       elif user_details.is_student==True:
              new_reg_user = CustomUser.objects.get(pk=pk,is_student=True)
+             return render(request,'unapproved-user-view.html',{'new_reg_user': new_reg_user })
       else:
-           new_reg_user = None 
-      return render(request,'unapproved-user-view.html',{'new_reg_user': new_reg_user })
+         
+           return render(request,'unapproved-user-view.html',)
 
 # def update_payment_status(request,pk):
 #       update_user_payment = get_object_or_404(CustomUser,pk=pk)
