@@ -44,10 +44,15 @@ def update_user_details(request,pk):
         address = request.POST.get('address')
         email = request.POST.get('email')
         bio = request.POST.get('bio')
+        image = request.FILES.get('image')
+
 
 
         print(username)
         user_obj = get_object_or_404(StudentProfile,pk=pk)
+        if image:
+            user_obj.student_profile_picture.save(image.name, image)  
+
         user_obj.student.username=username
         user_obj.student.first_name=first_name
         user_obj.student.last_name=last_name

@@ -34,9 +34,12 @@ def update_trainer_details(request,pk):
         address = request.POST.get('address')
         email = request.POST.get('email')
         bio = request.POST.get('bio')
+        image = request.FILES.get('image')
 
-        print(username)
+    
         user_obj = get_object_or_404(TrainerProfile,pk=pk)
+        if image:
+            user_obj.trainer_profile_picture.save(image.name, image) 
         user_obj.trainer.username=username
         user_obj.trainer.first_name=first_name
         user_obj.trainer.last_name=last_name
