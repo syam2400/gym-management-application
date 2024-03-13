@@ -79,7 +79,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     
-    # 'gym_management.users.custom_middleware.CustomCsrfViewMiddleware'
 ]
 
 

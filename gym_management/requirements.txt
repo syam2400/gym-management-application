@@ -1,7 +1,7 @@
 
 Django==5.0.2
 pillow==10.2.0
-channels==0.7.0
+channels==4
 channels-redis==4.2.0
 daphne==4.1.0
 razorpay==1.4.1
