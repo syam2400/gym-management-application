@@ -26,8 +26,28 @@ def chat_room(request,slug):
 def update_trainer_details(request,pk):
     
     user = get_object_or_404(TrainerProfile,pk=pk)
-    if not request.user.is_authenticated or request.user != user.trainer:
-        return redirect('user_login') 
+    if request.method == "POST":
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        email = request.POST.get('email')
+        bio = request.POST.get('bio')
+
+        print(username)
+        user_obj = get_object_or_404(TrainerProfile,pk=pk)
+        user_obj.trainer.username=username
+        user_obj.trainer.first_name=first_name
+        user_obj.trainer.last_name=last_name
+        user_obj.trainer.email=email
+        user_obj.trainer.address=address
+        user_obj.trainer_bio = bio
+       
+        user_obj.trainer.phone=phone
+        user_obj.save()
+        user_obj.trainer.save()
+        return redirect('trainer_profile')
     
     
     return render(request,"edit-trainer-details.html",{'user': user})
