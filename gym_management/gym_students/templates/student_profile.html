@@ -23,22 +23,29 @@
                     </div>
                 </div>
                 <div class="profile-subheader" style="height: 100px;">
-                    <input placeholder="add bio" type="text" style="height: 100px;">
+                    <input placeholder="add bio" type="text" style="height: 100px;" value="{{student_user.student_bio}}">
                 </div>
                 <div class="skills">
-                    <div class="skill">{{student_user.student.gender}}</div>
-                    <div class="skill">{{student_user.student.goal}}</div>
-                    <div class="skill">{{student_user.student.fitness_level}}</div>
-                    <div class="skill">None</div>
+                    <div class="skill"><h1>{{student_user.student.gender}}</h1></div>
+                    <div class="skill"><h1>{{student_user.student.goal}}</h1></div>
+                    <div class="skill"><h1>{{student_user.student.fitness_level}}</h1></div>
+                   
                 </div>
 
                 <div class="personal-info">
                     <h5>Contact Information</h5>
-                    <p>Full Name: Kenneth Valdez</p>
-                    <p>Email: fip@jukmuh.al</p>
-                    <p>Phone: (239) 816-9029</p>
-                    <p>Mobile: (320) 380-4539</p>
-                    <p>Address: Bay Area, San Francisco, CA</p>
+                    <p>Full Name: {{student_user.student.first_name}}{{student_user.student.last_name}}</p>
+                    <p>Email: {{student_user.student.email}}</p>
+                    <p>Phone: {{student_user.student.phone}}</p>
+                    
+                    <p>Address: {{student_user.student.address}}</p>
+                    <p>Assigned trainer: 
+                        {% for trainer in student_user.assigned_trainer.all %}
+                        {{trainer}}
+                        {% endfor %}
+
+                    </p>
+
                     <a href="{% url 'edit_user_details' student_user.id %}" class="btn btn-info" style="height: 50px;width: 200px;
                     display: flex;justify-content: center;align-items: center;font-size: 20px;">Edit</a>
                 </div>
@@ -272,6 +279,8 @@ style="height: 400px;position: absolute;right: 30px;top: 600px;">
 </div>
 {% endif %} 
 </div> 
+<div class="col-md-12">
+    <h1>If you want to pay your monthly dues online</h1>
     <div class="col-md-12" style="height: 80px;width: 150px;border: solid 5px;background-color: rgb(255, 255, 255);color: rgb(253, 253, 253);
     display: flex;justify-content: center;align-items: center;font-size: 30px;font-family: 'Courier New', Courier, monospace;padding: 30px;
     border-color: brown;">
@@ -279,6 +288,7 @@ style="height: 400px;position: absolute;right: 30px;top: 600px;">
         PAYME
     </a> 
     </div>
+</div>
    
         </div>
     </div>

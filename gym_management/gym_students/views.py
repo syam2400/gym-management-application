@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseServerError
 import requests
+from django.views.decorators.csrf import csrf_protect
 
 
 def students_homepage_view(request):
@@ -37,9 +38,25 @@ def chat_rooms_view(request,slug):
 def update_user_details(request,pk):
     if request.method == "POST":
         username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        email = request.POST.get('email')
+        bio = request.POST.get('bio')
+
+
         print(username)
         user_obj = get_object_or_404(StudentProfile,pk=pk)
         user_obj.student.username=username
+        user_obj.student.first_name=first_name
+        user_obj.student.last_name=last_name
+        user_obj.student.email=email
+        user_obj.student.address=address
+        user_obj.student_bio = bio
+        print(user_obj.student_bio)
+        user_obj.student.phone=phone
+        user_obj.save()
         user_obj.student.save()
         return redirect('student_profile')
 
@@ -49,7 +66,7 @@ def update_user_details(request,pk):
 
 
 # payment_app/views.py
-
+@login_required
 def initiate_payment_view(request):
     total = 1500
    
@@ -79,8 +96,7 @@ def initiate_payment_view(request):
 
 
 
-     
-@csrf_exempt
+@csrf_exempt 
 def payment_success(request):
     
     return render(request, "payment_success.html")
