@@ -39,11 +39,15 @@
                     <p>Phone: {{student_user.student.phone}}</p>
                     
                     <p>Address: {{student_user.student.address}}</p>
-                    <p>Assigned trainer: 
+                    <div style="height: 60px;width: auto; ">
+                       <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-weight: 100;">
+                        Assigned trainer: 
                         {% for trainer in student_user.assigned_trainer.all %}
                         {{trainer}}
                         {% endfor %}
+                       </h1> 
 
+                    </div>
                     </p>
 
                     <a href="{% url 'edit_user_details' student_user.id %}" class="btn btn-info" style="height: 50px;width: 200px;

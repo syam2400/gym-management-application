@@ -1,9 +1,11 @@
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from .models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 def home(request):
     return render(request,'index.html')
@@ -34,10 +36,11 @@ def about_page(request):
 def registration_redirection(request):
     return render(request,"register.html")
 
+        
 
-def student_registeration_form(request):
-      
-    if request.method == "POST":
+
+def student_registeration_form(request):   
+   if request.method == "POST":
 
         username = request.POST["username"]
         email = request.POST['email']
@@ -48,18 +51,29 @@ def student_registeration_form(request):
         fitness_level = request.POST["fitness_level"]
         goal = request.POST["goal"]
 
-        password = request.POST["password"]
+        password = request.POST["password"] 
 
-        user = CustomUser.objects.create(username=username, email=email, phone=phone,
-                                             age=age, place= place,gender=gender, fitness_level=fitness_level,goal=goal)
+        try:
+            # Attempt to create a new user
+            user = CustomUser.objects.create(username=username, email=email, phone=phone,
+                                                age=age, place=place, gender=gender, fitness_level=fitness_level, goal=goal)
+            user.is_student = True
+            user.set_password(password)
+            user.save()
+            return redirect('user_login')
         
-        user. is_student = True
-        user.set_password(password)
+        except IntegrityError:
+            # Handle the case where the username already exists
+            message = "Username already exists. Please choose a different one."
+            return render(request, 'student_signup.html', {'message': message})
 
-        user.save()
-        return redirect('user_login')
-    
-    return render(request,"student_signup.html")
+        except Exception as e:
+            # Handle any other exceptions here
+            print(e)  # Print the exception for debugging purposes
+            message = "An error occurred. Please try again later."
+            return render(request, 'student_signup.html', {'message': message})
+
+   return render(request, 'student_signup.html')
 
 
 def trainer_registeration_form(request):
@@ -79,21 +93,30 @@ def trainer_registeration_form(request):
 
         password = request.POST.get("password")
 
-        user = CustomUser.objects.create(username=username,email=email, phone=phone,age=age, place=place,gender=gender, 
+
+        try:
+            user = CustomUser.objects.create(username=username,email=email, phone=phone,age=age, place=place,gender=gender, 
                                              specialization=specialization, experience_years= experience_years,
                                               certifications= certifications,qualification=qualification)
+            user.is_student = True
+            user.set_password(password)
+            user.save()
+            return redirect('user_login')
         
-        user.is_trainer = True
-        user.set_password(password)
+        except IntegrityError:
+            # Handle the case where the username already exists
+            message = "Username already exists. Please choose a different one."
+            return render(request, 'trainer_signup.html', {'message': message})
 
-        user.save()
-        return redirect('user_login')
-
+        except Exception as e:
+            # Handle any other exceptions here
+            print(e)  # Print the exception for debugging purposes
+            message = "An error occurred. Please try again later."
+            return render(request, 'trainer_signup.html', {'message': message})
 
     return render(request,"trainer_signup.html")
 
-# def decline(request):
-#      return render(request,"decline.html")
+
 
 @csrf_exempt
 def user_login(request):
