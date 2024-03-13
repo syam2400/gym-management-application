@@ -23,6 +23,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES,null=True,blank=True)
     phone = models.PositiveIntegerField(default=0,null=True, blank=True)
     place = models.CharField(max_length=30,null=True,blank=True)
+    address = models.TextField(null=True, blank=True)
 
     #this fields is for trianers registration  
  

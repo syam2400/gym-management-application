@@ -66,14 +66,14 @@
 
                         {% if student.assigned_trainer.all %}
                         {% for trainer in student.assigned_trainer.all %}
-                        <option value="">{{trainer.trainer.username}}</option>
+                        <option  value="">{{trainer.trainer.username}}</option>
                         {% endfor %}
                         <option value="">-----------</option> <!-- Divider -->
                         {% else %}
 
-                        <option value="">Select a Trainer</option>
+                        <option  value="">Select a Trainer</option>
                         {% for trainer in get_trainers %}
-                        <option value="{{ trainer.id }}">{{ trainer.trainer.username }}</option>
+                        <option  value="{{ trainer.id }}">{{ trainer.trainer.username }}</option>
                         {% endfor %}
 
                         {% endif %}
@@ -85,7 +85,7 @@
             </td>
 
 
-            <td></td>
+            
         </tr>
         {% endfor %}
     </tbody>
