@@ -17,6 +17,7 @@ def users_list(request):
     }
     return render(request,'owner-index.html',context)
 
+# for approving registered user to login,without approval user cant login
 def approve_user(request, user_id,):  
         if request.method == 'POST':
             status = request.POST.get('status')

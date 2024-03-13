@@ -72,14 +72,14 @@ def trainer_registeration_form(request):
         age = request.POST["age"]
         place = request.POST["place"]
         gender = request.POST["gender"]
-        specialization = request.POST["special"]
+        specialization = request.POST.get('special')
         experience_years = request.POST["exp-yrs"]
         certifications = request.POST["cert"]
         qualification = request.POST["qualif"]
 
         password = request.POST.get("password")
 
-        user = CustomUser.objects.create(username= username ,email=email, phone=phone,age=age, place=place,gender=gender, 
+        user = CustomUser.objects.create(username=username,email=email, phone=phone,age=age, place=place,gender=gender, 
                                              specialization=specialization, experience_years= experience_years,
                                               certifications= certifications,qualification=qualification)
         
@@ -92,7 +92,8 @@ def trainer_registeration_form(request):
 
     return render(request,"trainer_signup.html")
 
-
+# def decline(request):
+#      return render(request,"decline.html")
 
 @csrf_exempt
 def user_login(request):
@@ -118,7 +119,7 @@ def user_login(request):
                          return render(request, 'user_login.html', {'error_messages':  error_messages})
                          
             else:
-                return HttpResponseForbidden("Your account is pending approval by the admin.")
+                return render(request,"decline.html")
         else:
                 return HttpResponseForbidden("Invalid login credentials.")
     else:

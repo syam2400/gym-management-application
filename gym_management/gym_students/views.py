@@ -78,11 +78,4 @@ def initiate_payment_view(request):
     return render(request,"payment.html",{'data':response_data})
 
 
-# def update_profile(request):
-#     if request.method == "POST":
-#         username = request.POST.get('username')
-
-
-
-     
     

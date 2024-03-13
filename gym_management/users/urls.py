@@ -33,6 +33,7 @@ urlpatterns = [
     path('register', views.registration_redirection,name='register'), #connects to a common registration button
     path('trainer_register', views.trainer_registeration_form,name='trainer_register'),
     path('student_register', views.student_registeration_form,name='student_register'),
+    # path("decline",views.decline,name="decline")
 
     path('user_login',views.user_login,name='user_login'),
     path('logout/', views.user_logout, name='logout')

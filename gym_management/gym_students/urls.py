@@ -23,7 +23,7 @@ urlpatterns = [
     path('student_profile/', views.students_profile_view,name="student_profile"),
     path('edit-user-details/<int:pk>/', views.update_user_details,name="edit_user_details"),
 
-    path('chat_room_page/', views.chat_rooms_view,name="chat_rooms_page"),
+    
     path("<str:slug>/", views.chat_rooms_view, name="room"),
 
     path('initiate-payments', views.initiate_payment_view,name="initiate_payments"),
