@@ -7,7 +7,7 @@
     <div class="container-fluid profile-container">
         <div class="row">
             <div class="col-md-3 img-column" style="border: solid 3px; height: 900px;">
-                <img style="border-image: round;" src="https://th.bing.com/th/id/OIP.QB4Dl5HLYKmdt1dJlbIKxQHaLI?w=129&h=194&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                <img style="border-image: round;" src="{{trainer_user.trainer_profile_picture.url }}"
                     alt="Profile Image" class="img-fluid rounded">
                 <div class="col-md-12" style="margin-top: 20px; border: solid 3px; ">
                 <h1>Assigned students</h1>
@@ -16,7 +16,7 @@
                     <div class="card-body col-md-12" >
                       <h5 class="card-title" style="font-size: 30px;">{{student}}</h5>
                       <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      
                     </div>
                   </div>
                   {% endfor %}
@@ -46,12 +46,15 @@
 
                 <div class="personal-info">
                     <h5>Contact Information</h5>
-                    <p>Full Name: Kenneth Valdez</p>
-                    <p>Email: fip@jukmuh.al</p>
-                    <p>Phone: (239) 816-9029</p>
-                    <p>Mobile: (320) 380-4539</p>
-                    <p>Address: Bay Area, San Francisco, CA</p>
-                    <a href="{% url 'trainer_details' trainer_user.id %}" class="btn btn-info">Edit</a>
+                    <p>Full Name:{{trainer_user.trainer.first_name}}{{trainer_user.trainer.last_name}}</p>
+                    <p>Email: {{trainer_user.trainer.email}}</p>
+                    <p>Phone: {{trainer_user.trainer.phone}}</p>
+                    
+                    <p>{{trainer_user.trainer.address}}</p>
+                
+                    <a href="{% url 'trainer_details' trainer_user.id %}" class="btn btn-info" style="height: 50px;width: 200px;
+                    display: flex;justify-content: center;align-items: center;font-size: 20px;">Edit</a>
+                
                 </div>
             </div>
 
