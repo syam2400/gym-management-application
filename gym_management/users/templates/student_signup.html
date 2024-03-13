@@ -118,7 +118,9 @@
         <!-- Sign Up Start -->
         <div class="container-fluid" style="font-size: 15px;">
           
-
+            {% if message %}
+            <h1 style="display: flex;justify-content: center;align-items: center;font-size: 30px;"> {{message}}</h1>
+             {% endif %}
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-8 col-lg-6 col-xl-5">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
