@@ -117,6 +117,31 @@ def trainer_registeration_form(request):
     return render(request,"trainer_signup.html")
 
 
+def social_user_login(request):
+     social_user = get_object_or_404(CustomUser,username=request.user)
+     if social_user.is_student == True and social_user.is_approved == True :
+           return redirect('student_homepage')
+     
+     elif social_user.is_trainer == True and social_user.is_approved == True :
+           return redirect('trainer_homepage')
+     elif social_user.is_trainer or social_user.is_student :
+          message = "login request is pending , you can login if the admin gives the approval"
+          return render(request, 'social-auth.html',{'message': message})
+ 
+     else :
+          if request.method == 'POST':
+               role = request.POST.get('role')
+               if role == 'trainer':
+                    social_user.is_trainer = True
+                    social_user.save()
+                    return redirect('user_login')
+               else :
+                    social_user.is_student = True
+                    social_user.save()
+                    return redirect('user_login')
+    
+     return render(request,'social-auth.html')
+
 
 @csrf_exempt
 def user_login(request):

@@ -7,8 +7,12 @@
     <div class="container-fluid profile-container">
         <div class="row">
             <div class="col-md-3 img-column" style="border: solid 3px;height: 900px;">
+                {% if student_user.student_profile_picture %}
                 <img src="{{student_user.student_profile_picture.url}}"
                     alt="Profile Image" class="img-fluid rounded">
+                    {% else %}
+                    <p style="font-size: 30px;">No profile picture available.</p>
+                    {% endif %}
             </div>
 
             <div class="col-md-8 info-column">

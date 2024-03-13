@@ -28,6 +28,7 @@ urlpatterns = [
     path('pricing_page',views.pricing_page,name='pricing'),
     path('courses/',views.courses_page,name='courses'),
     path('about/',views.about_page,name='about'),
+    path('social-auth-users/',views.social_user_login,name='social_user'),
 
 
     path('register', views.registration_redirection,name='register'), #connects to a common registration button

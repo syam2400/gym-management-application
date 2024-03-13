@@ -173,7 +173,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '871151238293-1ua8ep1l3ntl81vq632ri1c8e19eopit.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 # Redirect URL after authentication
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'  # Redirect to this URL after successful login
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'social_user'  # Redirect to this URL after successful login
 
 SOCIAL_AUTH_LOGOUT_REDIRECT_URL = '/'
 
