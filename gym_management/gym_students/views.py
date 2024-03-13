@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from gym_students.models import *
 from django.contrib.auth.decorators import login_required
-
+from gym_students.models import Room,Message
 import razorpay
 from django.conf import settings
 from django.http import JsonResponse
@@ -11,27 +11,27 @@ from django.http import HttpResponseServerError
 import requests
 
 
-
 def students_homepage_view(request):
     
     return render(request,"students-index.html")
 
 
-
 def students_profile_view(request):
      
-    rooms=Room.objects.all()
     student_user = get_object_or_404(StudentProfile,student =request.user)
-    return render(request,"student_profile.html",{'student_user':student_user,'rooms':rooms})
+    rooms=Room.objects.all()
+    return render(request,"student_profile.html",{'student_user':student_user,'rooms': rooms})
 
 
 def chat_rooms_view(request,slug):
     student_user = get_object_or_404(StudentProfile,student =request.user)
-    room_name=get_object_or_404(Room, slug=slug) 
+    room_name=Room.objects.get(slug=slug).name
     print(slug,room_name)
     messages=Message.objects.filter(room=Room.objects.get(slug=slug))
-   
     return render(request,"student_profile.html",{"student_user":student_user,"room_name":room_name, "messages":messages,"slug":slug})
+
+
+
 
 @login_required
 def update_user_details(request,pk):
@@ -78,11 +78,13 @@ def initiate_payment_view(request):
     return render(request,"payment.html",{'data':response_data})
 
 
-# def update_profile(request):
-#     if request.method == "POST":
-#         username = request.POST.get('username')
-
-
 
      
+@csrf_exempt
+def payment_success(request):
     
+    return render(request, "payment_success.html")
+
+@csrf_exempt
+def payment_failed(request):
+    return render(request, "payment_failed.html")
