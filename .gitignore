@@ -1,2 +1,2 @@
-/gym-venv
-/db.sqlite3
+gym-venv/
+*.sqlite3
