@@ -1,1 +1,2 @@
-gym-venv/
+/gym-venv
+/db.sqlite3
