@@ -76,7 +76,7 @@ def initiate_payment_view(request):
     total = 1500
    
     amount = float(total) * 100  # Amount in paise
-    client = razorpay.Client(auth=(settings.KEY, settings.SECRET))
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
     payment_data = {
             "amount": amount,
@@ -91,7 +91,7 @@ def initiate_payment_view(request):
             "id": order["id"],
             "amount": int(order["amount"])/100,
             "currency": order["currency"],
-            "key": settings.KEY,
+            "key": settings.RAZORPAY_KEY_ID,
             "name": "gym-app",
             "description": "Payment for Your Product",
             "image": "https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/06/shopping-online.jpg",  # Replace with your logo URL

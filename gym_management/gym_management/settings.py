@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -145,7 +147,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -169,8 +171,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # credentials for google social auth
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '871151238293-1ua8ep1l3ntl81vq632ri1c8e19eopit.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 # Redirect URL after authentication
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'social_user'  # Redirect to this URL after successful login
@@ -178,7 +178,13 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'social_user'  # Redirect to this URL after suc
 SOCIAL_AUTH_LOGOUT_REDIRECT_URL = '/'
 
 
-KEY = 'rzp_test_X8BN2SrxMAsoqF'
-SECRET = 'PpCVnEzTqpX4bmfkDi1tl3Mn'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+# Example: Set session cookie to expire after 24 hours
+SESSION_COOKIE_AGE = 86400  # 24 hours in seconds
+
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")

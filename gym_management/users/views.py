@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.views.decorators.cache import never_cache
 
 def home(request):
     return render(request,'index.html')
@@ -143,37 +144,55 @@ def social_user_login(request):
      return render(request,'social-auth.html')
 
 
-@csrf_exempt
-def user_login(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
 
-        user = authenticate(username=username,password=password)
-            
-        if user is not None :
-            if user.is_approved :
-                    if user.is_student :
-                        login(request, user)
+def user_login(request):
+       
+        if request.session.get('user_key'):
+                logged_user = get_object_or_404(CustomUser,username=user.username)
+                if logged_user.is_trainer :
+                    return redirect('trainer_homepage')
+                elif logged_user.is_student :
                         return redirect('student_homepage')
-                    elif user.is_trainer :
-                        login(request, user)
-                        return redirect('trainer_homepage')
-                    elif user.is_superuser :
-                        login(request, user)
+                elif logged_user.is_superuser:
                         return redirect('users_list')
-                    else :
-                         error_messages = "invalid credentials"
-                         return render(request, 'user_login.html', {'error_messages':  error_messages})
-                         
-            else:
-                return render(request,"decline.html")
+                else:
+                      return render(request,'user_login.html')
         else:
-                return HttpResponseForbidden("Invalid login credentials.")
-    else:
-        return render(request,'user_login.html')
-    
-    
+                         
+                if request.method == "POST":
+                    username = request.POST.get('username')
+                    password = request.POST.get('password')
+
+                    user = authenticate(username=username,password=password)
+                    request.session['user_key'] = 'current_user_value'
+                        
+                    if user is not None :
+                        if user.is_approved :
+                                if user.is_student :
+                                    login(request, user)
+                                    return redirect('student_homepage')
+                                elif user.is_trainer :
+                                    login(request, user)
+                                    return redirect('trainer_homepage')
+                                elif user.is_superuser :
+                                    login(request, user)
+                                    return redirect('users_list')
+                                else :
+                                    error_messages = "invalid credentials"
+                                    return render(request, 'user_login.html', {'error_messages':  error_messages})
+                                    
+                        else:
+                            return render(request,"decline.html")
+                    else:
+                            return HttpResponseForbidden("Invalid login credentials.")
+                else:
+                    return render(request,'user_login.html')
+                
+        
 def user_logout(request):
+    print(request.session['user_key'])
     logout(request)
+    if 'user_key' in request.session:
+        del request.session['user_key']
     return  user_login(request)
+# need  a javascript code that checks users current state and print in the console
