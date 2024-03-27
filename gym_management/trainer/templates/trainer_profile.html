@@ -2,53 +2,66 @@
 {% load static %}
 {% block content %}
 
-<section style="padding-top: 100px; margin-top: 100px; padding: 40px;">
+<style>
+    .img-column {
+      
+        /* Lighter border */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        /* Soft shadow for depth */
+        height: auto;
+        /* Adjust height automatically */
+        padding: 20px;
+        /* Add some padding */
 
-    <div class="container-fluid profile-container">
+        flex-direction: column;
+        background-color: #f9f9f9;
+        /* Light background */
+    }
+
+    .img-column img {
+        max-height: 400px;
+        /* Adjust based on preference */
+        max-width: 100%;
+        /* Ensure responsiveness */
+        border-radius: 50%;
+        /* Circular images */
+        transition: transform .2s;
+        /* Smooth transition for hover effect */
+    }
+
+    .img-column img:hover {
+        transform: scale(1.05);
+        /* Slight zoom on hover */
+        cursor: pointer;
+    }
+
+    .no-image-placeholder {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .no-image-icon {
+        font-size: 100px;
+        /* Large icon size */
+        color: #aaa;
+        /* Subtle icon color */
+    }
+</style>
+<section style="padding-top: 100px; margin-top: 100px; padding: 40px;background-color:#212529;">
+
+    <div class="container-fluid profile-container" style="background-color: rgb(46, 40, 40);color: white;">
         <div class="row">
-            <div class="col-md-3 img-column" style="border: solid 3px; height: 900px;">
+            <div class="col-md-3 img-column" style="border: solid 3px; height: 900px;background-color: rgb(58, 54, 54);">
                 {% if trainer_user.trainer_profile_picture %}
                 <img src="{{trainer_user.trainer_profile_picture.url }}"
                     alt="Profile Image" class="img-fluid rounded">
-                    {% else %}
-                    <p style="font-size: 30px;">No profile picture available.</p>
-                    {% endif %}
-                <img style="border-image: round;" src=""
-                    alt="Profile Image" class="img-fluid rounded">
-                <div class="col-md-12" style="margin-top: 20px; border: solid 3px; ">
-                <h1>Assigned students</h1>
-                {% for student in trainer_user.assigned_students.all %}
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body col-md-12" >
-                      <h5 class="card-title" style="font-size: 30px;">{{student}}</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      
+                {% else %}
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <i class="no-image-icon fas fa-user-circle"></i>
                     </div>
-                  </div>
-                  {% endfor %}
-                </div>
-            </div>
-
-            <div class="col-md-8 info-column">
-                <div class="profile-header d-flex justify-content-between align-items-center">
-                    <h3 style="color: wheat;">{{trainer_user.trainer.username}}</h3>
-                    <div class="social-icons">
-                        <i class="fa fa-facebook"></i>
-                        <i class="fa fa-google"></i>
-                        <i class="fa fa-youtube-play"></i>
-                        <i class="fa fa-dribbble"></i>
-                        <i class="fa fa-linkedin"></i>
-                    </div>
-                </div>
-                <div class="profile-subheader" style="height: 100px;">
-                    <input placeholder="add bio" type="text" style="height: 100px;">
-                </div>
-                <div class="skills">
-                    <div class="skill">{{trainer_user.trainer.gender}}</div>
-                    <div class="skill">{{trainer_user.trainer.goal}}</div>
-                    <div class="skill">{{trainer_user.trainer.fitness_level}}</div>
-                    <div class="skill">None</div>
-                </div>
+                    <p class="no-image-placeholder">No profile picture available.</p>
+    
+                {% endif %}
 
                 <div class="personal-info">
                     <h5>Contact Information</h5>
@@ -62,6 +75,46 @@
                     display: flex;justify-content: center;align-items: center;font-size: 20px;">Edit</a>
                 
                 </div>
+                
+
+               
+            </div>
+
+            <div class="col-md-8 info-column">
+                <div class="profile-header d-flex justify-content-between align-items-center" style="background-color: rgb(58, 54, 54);">
+                    <h3 style="color: white;">{{trainer_user.trainer.username}}</h3>
+                    <div class="social-icons">
+                        <i class="fa fa-facebook"></i>
+                        <i class="fa fa-google"></i>
+                        <i class="fa fa-youtube-play"></i>
+                        <i class="fa fa-dribbble"></i>
+                        <i class="fa fa-linkedin"></i>
+                    </div>
+                </div>
+                <div class="profile-subheader" style="height: 100px;">
+                    <input placeholder="add bio" type="text" style="height: 100px;">
+                </div>
+                <div class="skills">
+                    <div class="skill" style="background-color: rgb(58, 54, 54);">{{trainer_user.trainer.gender}}</div>
+                    <div class="skill" style="background-color: rgb(58, 54, 54);">{{trainer_user.trainer.goal}}</div>
+                    <div class="skill" style="background-color: rgb(58, 54, 54);">{{trainer_user.trainer.fitness_level}}</div>
+                    <div class="skill" style="background-color: rgb(58, 54, 54);">None</div>
+                </div>
+              
+                <div class="col-md-12" style="margin-top: 20px; border: solid 3px;; ">
+                    <h1>Assigned students</h1>
+                    {% for student in trainer_user.assigned_students.all %}
+                    <div class="card" style="width: 18rem;width: auto;">
+                        <div class="card-body col-md-12" >
+                          <h5 class="card-title" style="font-size: 30px;">{{student}}</h5>
+                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+               
+
             </div>
 
             <div class="col-md-4"

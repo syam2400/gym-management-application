@@ -7,6 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+
+
+
 
 def home(request):
     return render(request,'index.html')
@@ -144,19 +148,22 @@ def social_user_login(request):
      return render(request,'social-auth.html')
 
 
-
+@never_cache
 def user_login(request):
        
         if request.session.get('user_key'):
-                logged_user = get_object_or_404(CustomUser,username=user.username)
+                print(request.session.get('user_key'))
+                logged_user = get_object_or_404(CustomUser,username=request.session.get('user_key'))
+                print("hiiii",logged_user)
                 if logged_user.is_trainer :
                     return redirect('trainer_homepage')
                 elif logged_user.is_student :
                         return redirect('student_homepage')
-                elif logged_user.is_superuser:
-                        return redirect('users_list')
+                # elif logged_user.is_superuser:
                 else:
-                      return render(request,'user_login.html')
+                       return redirect('users_list')
+                # else:
+                #       return render(request,'user_login.html')
         else:
                          
                 if request.method == "POST":
@@ -164,10 +171,11 @@ def user_login(request):
                     password = request.POST.get('password')
 
                     user = authenticate(username=username,password=password)
-                    request.session['user_key'] = 'current_user_value'
+                   
                         
                     if user is not None :
                         if user.is_approved :
+                                request.session['user_key'] = username
                                 if user.is_student :
                                     login(request, user)
                                     return redirect('student_homepage')
@@ -190,9 +198,9 @@ def user_login(request):
                 
         
 def user_logout(request):
-    print(request.session['user_key'])
+   
     logout(request)
     if 'user_key' in request.session:
+        print("hlo",request.session.get('user_key'))
         del request.session['user_key']
-    return  user_login(request)
-# need  a javascript code that checks users current state and print in the console
+    return  redirect("user_login")

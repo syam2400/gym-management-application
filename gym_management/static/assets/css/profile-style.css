@@ -2,7 +2,7 @@
   max-width: 100%;
   height: auto;
   display: block;
-  border-radius: 5px;
+
 }
 
 .profile-container {
@@ -29,8 +29,11 @@
 }
 
 .profile-subheader {
-  background-color: #b9b9b9;
-  color: #ffffff;
+  background-color: rgb(58, 54, 54);
+  color: white;
+  font-size: 15px;
+  font-weight: 100;
+  text-decoration: uppercase;
   padding: 5px;
   margin-top: 15px;
   border-radius: 5px;
@@ -355,6 +358,7 @@ body {
 }
 
 .direct-chat-text {
+    font-size: 10px;
     border-radius: 5px;
     position: relative;
     padding: 5px 10px;
@@ -432,7 +436,7 @@ body {
 }
 
 .direct-chat-warning .right>.direct-chat-text {
-    background: #f39c12;
+    background: #2a2831;
     border-color: #f39c12;
     color: #fff;
 }

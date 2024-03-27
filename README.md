@@ -30,7 +30,11 @@ Run database migrations: python manage.py migrate
 Run the development server: python manage.py runserver
 Access the application in your web browser (usually http://127.0.0.1:8000/).
 Contributing
+
+
 We welcome contributions! If you'd like to improve the Gym Management Application, please fork the repository and submit a pull request.
+
+
 
 License
 [Specify the license under which the project is released.]

@@ -95,7 +95,7 @@
                   </li>
 
 
-                  {% else %}
+                  {% elif user.is_trainer %}
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'trainer_homepage' %}">Trainer HOME</a>
                   </li>
@@ -108,7 +108,7 @@
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                   </li>
 
-                  {% endif %}
+                 
 
                   {% else %}
 
@@ -135,6 +135,32 @@
                     <a class="nav-link" href="{% url 'user_login' %}">login</a>
                   </li>
 
+
+              
+                  {% endif %}
+                  {% else %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li><a href="{% url 'courses' %}">Courses</a></li>
+                  <li><a href="{% url 'pricing' %}">Pricing</a></li>
+
+                  <li><a href="{% url 'about' %}">About</a></li>
+
+                  <li><a href="{% url 'blog' %}">Blog</a>
+                    <ul class="submenu">
+                      <li><a href="{% url 'gallery' %}">Gallery</a></li>
+                      <li><a href="{% url 'blog_elements' %}">Elements</a></li>
+                      <li><a href="">Blog Details</a></li>
+                    </ul>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">SignUp</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">login</a>
+                  </li>
 
 
                   {% endif %}
