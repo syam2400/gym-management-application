@@ -52,6 +52,7 @@ INSTALLED_APPS = [
    
 ]
 
+WSGI_APPLICATION = 'gym_management.wsgi.application'
 
 ASGI_APPLICATION = 'gym_management.asgi.application'
 
@@ -73,7 +74,6 @@ AUTHENTICATION_BACKENDS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'users.middleware.CheckSessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -105,7 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gym_management.wsgi.application'
+
 
 
 

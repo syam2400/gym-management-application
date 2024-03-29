@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from users.custom_decorator import resist_pages
 from gym_students.models import *
 from django.contrib.auth.decorators import login_required
 from gym_students.models import Room,Message
@@ -10,34 +11,45 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseServerError
 import requests
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.sites.shortcuts import get_current_site
+from django.views.decorators.cache import never_cache
+from django.db import IntegrityError
 
 
+@never_cache
+@resist_pages
+@login_required
 def students_homepage_view(request):
-    
     return render(request,"students-index.html")
 
-
+@never_cache
+@resist_pages
+@login_required
 def students_profile_view(request):
-     
     student_user = get_object_or_404(StudentProfile,student =request.user)
     rooms=Room.objects.all()
     return render(request,"student_profile.html",{'student_user':student_user,'rooms': rooms})
 
 
+@never_cache
+@resist_pages
+@login_required
 def chat_rooms_view(request,slug):
     student_user = get_object_or_404(StudentProfile,student =request.user)
     room_name=Room.objects.get(slug=slug).name
-    print(slug,room_name)
     messages=Message.objects.filter(room=Room.objects.get(slug=slug))
     return render(request,"student_profile.html",{"student_user":student_user,"room_name":room_name, "messages":messages,"slug":slug})
 
 
 
 
+
+@never_cache
+@resist_pages
 @login_required
 def update_user_details(request,pk):
     if request.method == "POST":
-        username = request.POST.get('username')
+        
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         phone = request.POST.get('phone')
@@ -48,12 +60,11 @@ def update_user_details(request,pk):
 
 
 
-        print(username)
         user_obj = get_object_or_404(StudentProfile,pk=pk)
         if image:
             user_obj.student_profile_picture.save(image.name, image)  
 
-        user_obj.student.username=username
+      
         user_obj.student.first_name=first_name
         user_obj.student.last_name=last_name
         user_obj.student.email=email
@@ -70,7 +81,12 @@ def update_user_details(request,pk):
 
 
 
+
 # payment_app/views.py
+
+
+@never_cache
+@resist_pages
 @login_required
 def initiate_payment_view(request):
     total = 1500
@@ -96,16 +112,59 @@ def initiate_payment_view(request):
             "description": "Payment for Your Product",
             "image": "https://www.onlinelogomaker.com/blog/wp-content/uploads/2017/06/shopping-online.jpg",  # Replace with your logo URL
         }
-  
-    return render(request,"payment.html",{'data':response_data})
+    callback = 'http://' + str(get_current_site(request)) + '/gym-students/payment-success/'
+    current_user = get_object_or_404(CustomUser,username=request.user)
+    user = get_object_or_404(StudentProfile,student=current_user)
+
+    order_obj = Order.objects.create(Student_user=user, total_amount=response_data['amount'], order_id=response_data['id'])
+
+
+    return render(request,"payment.html",{'data':response_data,"callback":callback,'user': user})
 
 
 
-@csrf_exempt 
-def payment_success(request):
-    
-    return render(request, "payment_success.html")
 
+@never_cache
 @csrf_exempt
-def payment_failed(request):
-    return render(request, "payment_failed.html")
+@resist_pages
+@login_required
+def payment_success(request):
+     if request.method == "POST":
+            payment_id = request.POST.get('razorpay_payment_id')
+            order_id = request.POST.get('razorpay_order_id')
+            signature = request.POST.get('razorpay_signature')
+            order_details = { 
+            'razorpay_order_id': order_id, 
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+            }
+          
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            try:
+                client.utility.verify_payment_signature(order_details)
+
+                current_user = get_object_or_404(CustomUser,username=request.user)
+                user = get_object_or_404(StudentProfile,student=current_user)
+                order_obj = get_object_or_404(Order, Student_user=user)
+                
+                order_obj.is_payemnt_success = True
+                order_obj.total_amount =  1500
+                order_obj.razorpay_order_id = order_details['razorpay_order_id']
+                order_obj.razorpay_payment_id = order_details['razorpay_payment_id']
+                order_obj.razorpay_signature = order_details['razorpay_signature']
+                order_obj.save()
+
+                return render(request, "payment_success.html")
+            except:
+               return render(request, "payment_failed.html")
+
+
+@never_cache
+@csrf_exempt
+@resist_pages
+@login_required
+def payment_details_view(request,pk):
+    user_obj = get_object_or_404(StudentProfile,pk=pk)
+    user_order_details = Order.objects.filter(Student_user=user_obj)
+
+    return render(request, "payment_details.html",{'user_order_details':user_order_details})

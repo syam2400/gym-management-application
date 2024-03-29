@@ -45,13 +45,14 @@
         color: #aaa;
         /* Subtle icon color */
     }
+    
 </style>
 
-<section style="padding-top: 80px; margin-top: 100px; padding: 40px;background-color:#212529; ">
+<section style="padding-top: 80px; margin-top: 100px; padding: 40px;background-color:#212529;">
 
     <div class="container-fluid profile-container" style="background-color: rgb(21, 14, 14);color: white;">
         <div class="row">
-            <div class="col-md-3 img-column" style="height: 850px;background-color: rgb(58, 54, 54);" >
+            <div class="col-md-3 img-column" style="height: auto;background-color: rgb(58, 54, 54);" >
                 {% if student_user.student_profile_picture %}
                 <img src="{{student_user.student_profile_picture.url}}" alt="Profile Image" class="img-fluid rounded">
                 {% else %}
@@ -74,7 +75,7 @@
                     <div style="height: 60px;width: auto; ">
                         <h1
                             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-weight: 100;text-transform: uppercase;">
-                            <p style="display: inline;">Assigned trainer :</p>
+                            <p style="display: inline;color: white;">Assigned trainer :</p>
                             {% for trainer in student_user.assigned_trainer.all %}
                             {{trainer}}
                             {% endfor %}
@@ -82,13 +83,16 @@
 
                     </div>
                     </p>
+                    
+                    <a href="{% url 'payment_details' student_user.id %}" class="btn btn-info" style="height: 50px;width: auto;
+                        display: flex;justify-content: center;align-items: center;font-size: 20px;">Payment details</a>
 
-                    <a href="{% url 'edit_user_details' student_user.id %}" class="btn btn-info" style="height: 50px;width: 200px;
+                    <a href="{% url 'edit_user_details' student_user.id %}" class="btn btn-info" style="height: 50px;width: auto;
                         display: flex;justify-content: center;align-items: center;font-size: 20px;">Edit</a>
                 </div>
             </div>
 
-            <div class="col-md-8 info-column">
+            <div class="col-md-9 info-column">
                 <div class="profile-header d-flex justify-content-between align-items-center"
                     style="background-color: rgb(58, 54, 54);">
                     <h3 style="color: white; font-size: 25px;text-transform: uppercase;">
@@ -101,8 +105,8 @@
                         <i class="fa fa-linkedin"></i>
                     </div>
                 </div>
-                <div class="profile-subheader" style="height: 100px;width: 800px;">
-                    <input placeholder="add bio" type="text" style="height: 100px;"
+                <div class="profile-subheader" style="height: 100px;width:auto;display: flex;">
+                    <input placeholder="add bio" type="text" style="height: 100px;flex-grow: 1;background-color: #131318;font-size: 30px;text-transform: uppercase;color: white;"
                         value="{{student_user.student_bio}}">
                 </div>
                 <div class="skills">
@@ -118,247 +122,257 @@
 
                 </div>
 
+                <div  style="height: auto;margin-top: 20px;">
+
+                    {% if rooms %}
+                    <div class="container">
+                        <div class="alert alert-info d-flex justify-content-between" role="alert" style="display: flex;align-items: center;justify-content: center;">
+                            <h5>Available Public Rooms</h5>
+                        </div>
+    
+                        <div class="row equal" style="margin-top: 20px;margin-bottom: 30px;">
+                            {% for room in rooms %}
+    
+                            <div class="col-sm-6 col-md-6 "
+                                style="height: auto;">
+                                <div class="card bg-light " style="max-width: 50rem;">
+                                    <div class="card-block">
+                                        <h3 class="card-title" style="text-transform: uppercase;">{{room.name}}</h3>
+                                        <p class="card-text" style="text-transform: uppercase;">It is a Public chat room for
+                                            users.</p>
+                                        <a href="{% url 'chat_room_page' room.slug %}" class="btn btn-outline-secondary">Go
+                                            to Room</a>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            {% endfor %}
+    
+                        </div>
+                        {% else %}
+    
+    
+                        <div class="page-content page-container" id="page-content">
+                            <div class="padding">
+                                <div class="row container d-flex justify-content-center">
+                                    <div class="col-md-12" style="margin-top: 0;">
+    
+                                        <div class="box box-warning direct-chat direct-chat-warning"
+                                            style="height: 488px;border: solid 3px;border-radius: 25px;">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title" style="text-transform: uppercase;">Chat Messages</h3>
+    
+                                                <div class="box-tools pull-right">
+                                                    <span data-toggle="tooltip" title="" class="badge bg-yellow"
+                                                        data-original-title="3 New Messages">20</span>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                            class="fa fa-minus"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip"
+                                                        title="" data-widget="chat-pane-toggle"
+                                                        data-original-title="Contacts">
+                                                        <i class="fa fa-comments"></i></button>
+                                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                                            class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+    
+                                            <div class="box-body">
+                                                {% if user.is_authenticated %}
+                                                <div class="direct-chat-messages" id="chatbox">
+                                                    {% if messages %}
+                                                    {% for message in messages %}
+                                                    {% if message.user.username == request.user.username %}
+    
+                                                    <div class="direct-chat-msg">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class=" pull-left"
+                                                                style="border: solid 3px; border-radius: 10px;padding: 5px;text-transform: uppercase;color: black;">
+                                                                {{message.user.username}}
+                                                            </span>
+                                                            <span class="direct-chat-timestamp pull-right">
+                                                                {{message.created_on}}
+                                                            </span>
+                                                        </div>
+    
+                                                        <img class="direct-chat-img"
+                                                            src="https://img.icons8.com/color/36/000000/administrator-male.png"
+                                                            alt="message user image">
+    
+                                                        <div class="direct-chat-text">
+                                                           <h3 style="font-size: 15px;"> {{message.content}}</h3>
+                                                        </div>
+    
+                                                    </div>
+    
+                                                    {% else %}
+    
+                                                    <div class="direct-chat-msg right">
+                                                        <div class="direct-chat-info clearfix">
+                                                            <span class="direct-chat-name pull-right"
+                                                                style="border: solid 3px; border-radius: 10px;padding: 5px;text-transform: uppercase;color: rgb(9, 8, 8);">{{message.user.username}}</span>
+                                                            <span
+                                                                class="direct-chat-timestamp pull-left">{{message.created_on}}</span>
+                                                        </div>
+    
+                                                        <img class="direct-chat-img"
+                                                            src="https://img.icons8.com/office/36/000000/person-female.png"
+                                                            alt="message user image">
+    
+                                                        <div class="direct-chat-text">
+                                                            {{message.content}}
+                                                        </div>
+    
+                                                    </div>
+    
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                {% else %}
+                                                <div class="jumbotron" id="chatbox" style="padding: 4px 2px;">
+                                                    <b style="color: white;">No Messages in this Room.</b>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+    
+                                            <div class="box-footer">
+                                                <form action="#" class="bg-dark" style="color: white;"
+                                                    onsubmit="sendMessage(event)">
+                                                    <div class="input-group">
+                                                        <input type="text" name="message" id="my_input"
+                                                            placeholder="Type Message ..." class="form-control"
+                                                            style="height: 35px;font-size: 20px;">
+                                                        <span class="input-group-btn">
+                                                            <button type="submit" id="submit_button"
+                                                                class="btn btn-warning btn-flat">Send</button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+    
+                                        </div>
+    
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                        </div>
+    
+                        {{slug|json_script:"room_slug"}}
+    
+                        <script>
+                            function sendMessage(event) {
+                                console.log("sendMessage function called");
+                                event.preventDefault();
+                                var messageInput = document.querySelector("#my_input").value;
+    
+                                if (messageInput.length == 0) {
+                                    alert("Add some Input First Or Press Send Button!");
+                                } else {
+                                    chatSocket.send(JSON.stringify({
+                                        message: messageInput,
+                                        username: "{{request.user.username}}",
+                                        room_name: "{{room_name}}"
+                                    }));
+                                    document.querySelector("#my_input").value = ''; // Clear the input field after sending
+                                }
+                            }
+    
+                            const chatbox = document.querySelector("#chatbox");
+    
+    
+                            function scrollToBottom() {
+                                chatbox.scrollTop = chatbox.scrollHeight;
+                            }
+    
+                            scrollToBottom();
+    
+    
+                            const roomName = JSON.parse(document.getElementById('room_slug').textContent);
+    
+                            const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/" + roomName + "/");
+    
+                            chatSocket.onopen = function (e) {
+                                console.log("The connection was setup successfully !");
+                            };
+                            chatSocket.onclose = function (e) {
+                                console.log("Something unexpected happened !");
+                            };
+    
+                            document.querySelector("#my_input").focus();
+                            document.querySelector("#my_input").onkeyup = function (e) {
+                                if (e.keyCode == 13) {
+                                    e.preventDefault();
+                                    document.querySelector("#submit_button").click();
+                                }
+                            };
+    
+                            chatSocket.onmessage = function (e) {
+                                
+                                let formattedTime = new Date().toLocaleTimeString();
+                                const data = JSON.parse(e.data);
+                                var messageElement = document.createElement("div");
+                                messageElement.className = "media w-50 mb-3";
+    
+    
+                                if (data.username === "{{ request.user.username }}") {
+                                    messageElement.className = "media w-50 ml-auto mb-3";
+                                    messageElement.innerHTML = `
+    <div class="media-body">
+    <div class="bg-primary rounded py-2 px-3 mb-2">
+        <p class="text-small mb-0 text-white">${data.message}</p>
+    </div>
+    <p class="small text-muted text-right">${formattedTime}</p>
+    </div>
+    `;
+                                } else {
+                                    messageElement.innerHTML = `
+    
+    <div class="media-body ml-3">
+        <h2 class="small text-muted" style="font-size: 15px;text-transform: uppercase;">${data.username}</h2>
+    <div class="bg-dark rounded py-2 px-3 mb-2">
+        <p class="text-small mb-0 text-muted" style="border-radius: 2px;">${data.message}</p>
+    </div>
+    <p class="small text-muted">${formattedTime}</p>
+    </div>
+    `;
+                                }
+    
+                                document.querySelector("#chatbox").appendChild(messageElement);
+                                scrollToBottom();
+                            };
+                        </script>
+    
+    
+                        {% else %}
+                        <div class="container">
+                            <div class="alert alert-info d-flex justify-content-between" role="alert">
+                                <h5>You are not logged in</h5>
+    
+                                <button type="button" class="btn btn-light"><a href="{% url 'user_login' %}">Log
+                                        In</a></button>
+    
+                            </div>
+                        </div>
+                        {% endif %}
+    
+                        <br>
+    
+                    </div>
+                    {% endif %}
+                </div>
+
+
+
 
             </div>
             <!-- ........... -->
-            <div class="col-md-8" style="height: 400px;position: absolute;right: 130px;top: 500px;">
+   
 
-                {% if rooms %}
-                <div class="container">
-                    <div class="alert alert-info d-flex justify-content-between" role="alert">
-                        <h5>Available Public Rooms</h5>
-                    </div>
-
-                    <div class="row equal">
-                        {% for room in rooms %}
-
-                        <div class="col-sm-6 col-md-6 d-flex pb-2"
-                            style="height: 200px;display: flex;align-items: center;justify-content: ce;">
-                            <div class="card bg-light mb-4" style="max-width: 50rem;">
-                                <div class="card-block">
-                                    <h3 class="card-title" style="text-transform: uppercase;">{{room.name}}</h3>
-                                    <p class="card-text" style="text-transform: uppercase;">It is a Public chat room for
-                                        users.</p>
-                                    <a href="{% url 'chat_room_page' room.slug %}" class="btn btn-outline-secondary">Go
-                                        to Room</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {% endfor %}
-
-                    </div>
-                    {% else %}
-
-
-                    <div class="page-content page-container" id="page-content">
-                        <div class="padding">
-                            <div class="row container d-flex justify-content-center">
-                                <div class="col-md-12" style="margin-top: 0;">
-
-                                    <div class="box box-warning direct-chat direct-chat-warning"
-                                        style="height: 488px;border: solid 3px;border-radius: 25px;">
-                                        <div class="box-header with-border">
-                                            <h3 class="box-title" style="text-transform: uppercase;">Chat Messages</h3>
-
-                                            <div class="box-tools pull-right">
-                                                <span data-toggle="tooltip" title="" class="badge bg-yellow"
-                                                    data-original-title="3 New Messages">20</span>
-                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                                        class="fa fa-minus"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-box-tool" data-toggle="tooltip"
-                                                    title="" data-widget="chat-pane-toggle"
-                                                    data-original-title="Contacts">
-                                                    <i class="fa fa-comments"></i></button>
-                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                                        class="fa fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="box-body">
-                                            {% if user.is_authenticated %}
-                                            <div class="direct-chat-messages" id="chatbox">
-                                                {% if messages %}
-                                                {% for message in messages %}
-                                                {% if message.user.username == request.user.username %}
-
-                                                <div class="direct-chat-msg">
-                                                    <div class="direct-chat-info clearfix">
-                                                        <span class="direct-chat-name pull-left"
-                                                            style="border: solid 3px; border-radius: 10px;padding: 5px;text-transform: uppercase;">{{message.user}}</span>
-                                                        <span
-                                                            class="direct-chat-timestamp pull-right">{{message.created_on}}</span>
-                                                    </div>
-
-                                                    <img class="direct-chat-img"
-                                                        src="https://img.icons8.com/color/36/000000/administrator-male.png"
-                                                        alt="message user image">
-
-                                                    <div class="direct-chat-text">
-                                                       <h3 style="font-size: 15px;"> {{message.content}}</h3>
-                                                    </div>
-
-                                                </div>
-
-                                                {% else %}
-
-                                                <div class="direct-chat-msg right">
-                                                    <div class="direct-chat-info clearfix">
-                                                        <span class="direct-chat-name pull-right"
-                                                            style="border: solid 3px; border-radius: 10px;padding: 5px;text-transform: uppercase;">{{message.user}}</span>
-                                                        <span
-                                                            class="direct-chat-timestamp pull-left">{{message.created_on}}</span>
-                                                    </div>
-
-                                                    <img class="direct-chat-img"
-                                                        src="https://img.icons8.com/office/36/000000/person-female.png"
-                                                        alt="message user image">
-
-                                                    <div class="direct-chat-text">
-                                                        {{message.content}}
-                                                    </div>
-
-                                                </div>
-
-                                                {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                            {% else %}
-                                            <div class="jumbotron" id="chatbox" style="padding: 4px 2px;">
-                                                <b style="color: white;">No Messages in this Room.</b>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-
-                                        <div class="box-footer">
-                                            <form action="#" class="bg-dark" style="color: white;"
-                                                onsubmit="sendMessage(event)">
-                                                <div class="input-group">
-                                                    <input type="text" name="message" id="my_input"
-                                                        placeholder="Type Message ..." class="form-control"
-                                                        style="height: 35px;font-size: 20px;">
-                                                    <span class="input-group-btn">
-                                                        <button type="submit" id="submit_button"
-                                                            class="btn btn-warning btn-flat">Send</button>
-                                                    </span>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {{slug|json_script:"room_slug"}}
-
-                    <script>
-                        function sendMessage(event) {
-                            console.log("sendMessage function called");
-                            event.preventDefault();
-                            var messageInput = document.querySelector("#my_input").value;
-
-                            if (messageInput.length == 0) {
-                                alert("Add some Input First Or Press Send Button!");
-                            } else {
-                                chatSocket.send(JSON.stringify({
-                                    message: messageInput,
-                                    username: "{{request.user.username}}",
-                                    room_name: "{{room_name}}"
-                                }));
-                                document.querySelector("#my_input").value = ''; // Clear the input field after sending
-                            }
-                        }
-
-                        const chatbox = document.querySelector("#chatbox");
-
-
-                        function scrollToBottom() {
-                            chatbox.scrollTop = chatbox.scrollHeight;
-                        }
-
-                        scrollToBottom();
-
-
-                        const roomName = JSON.parse(document.getElementById('room_slug').textContent);
-
-                        const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/" + roomName + "/");
-
-                        chatSocket.onopen = function (e) {
-                            console.log("The connection was setup successfully !");
-                        };
-                        chatSocket.onclose = function (e) {
-                            console.log("Something unexpected happened !");
-                        };
-
-                        document.querySelector("#my_input").focus();
-                        document.querySelector("#my_input").onkeyup = function (e) {
-                            if (e.keyCode == 13) {
-                                e.preventDefault();
-                                document.querySelector("#submit_button").click();
-                            }
-                        };
-
-
-                        chatSocket.onmessage = function (e) {
-                            const data = JSON.parse(e.data);
-                            var messageElement = document.createElement("div");
-                            messageElement.className = "media w-50 mb-3";
-
-
-                            if (data.username === "{{ request.user.username }}") {
-                                messageElement.className = "media w-50 ml-auto mb-3";
-                                messageElement.innerHTML = `
-<div class="media-body">
-<div class="bg-primary rounded py-2 px-3 mb-2">
-    <p class="text-small mb-0 text-white">${data.message}</p>
-</div>
-<p class="small text-muted text-right">12:00 PM | Aug 13</p>
-</div>
-`;
-                            } else {
-                                messageElement.innerHTML = `
-<img src="https://bootstrapious.com/i/snippets/sn-chat/avatar.svg" alt="user" width="50" class="rounded-circle">
-<div class="media-body ml-3">
-<div class="bg-light rounded py-2 px-3 mb-2">
-    <p class="text-small mb-0 text-muted">${data.message}</p>
-</div>
-<p class="small text-muted">12:00 PM | Aug 13</p>
-</div>
-`;
-                            }
-
-                            document.querySelector("#chatbox").appendChild(messageElement);
-                            scrollToBottom();
-                        };
-                    </script>
-
-
-                    {% else %}
-                    <div class="container">
-                        <div class="alert alert-info d-flex justify-content-between" role="alert">
-                            <h5>You are not logged in</h5>
-
-                            <button type="button" class="btn btn-light"><a href="{% url 'user_login' %}">Log
-                                    In</a></button>
-
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <br>
-
-                </div>
-                {% endif %}
-            </div>
-            <div class="col-md-12" style="margin-top: 20px;display: inline;">
-                <h1>If you want to pay your monthly dues online</h1>
+            <div  style="margin-top: 40px;display: inline;">
+                <h1>If you want to pay your monthly dues online -</h1>
                 <a style="color: white;text-decoration: none;" href="{% url 'initiate_payments' %}">
                     <div class="col-md-12" style="height: 80px;width: 150px;border: solid 5px;background-color: rgb(0, 0, 0);color: rgb(253, 253, 253);
     display: flex;justify-content: center;align-items: center;font-size: 30px;font-family: 'Courier New', Courier, monospace;padding: 30px;

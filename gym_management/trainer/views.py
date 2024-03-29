@@ -1,11 +1,25 @@
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from gym_students.models import Room,Message
 
 from trainer.models import *
 
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+from users.custom_decorator import resist_pages
+
+
+
+@never_cache
+@resist_pages
+@login_required
 def trainer_homepage(request):
     return render(request,'trainer-index.html')
-    
+
+
+@never_cache
+@resist_pages
+@login_required
 def trainer_profile_view(request):
 
     trainer_user = get_object_or_404(TrainerProfile,trainer =request.user)
@@ -13,7 +27,9 @@ def trainer_profile_view(request):
     return render(request,"trainer_profile.html",{'trainer_user': trainer_user,"rooms":rooms})
 
 
-
+@never_cache
+@resist_pages
+@login_required
 def chat_room(request,slug):
     trainer_user = get_object_or_404(TrainerProfile,trainer =request.user)
     room_name=Room.objects.get(slug=slug).name
@@ -23,11 +39,13 @@ def chat_room(request,slug):
     return render(request,"trainer_profile.html",{'trainer_user': trainer_user,"room_name":room_name, "messages":messages,"slug":slug})
 
 
+@never_cache
+@resist_pages
+@login_required
 def update_trainer_details(request,pk):
-    
     user = get_object_or_404(TrainerProfile,pk=pk)
     if request.method == "POST":
-        username = request.POST.get('username')
+   
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         phone = request.POST.get('phone')
@@ -40,7 +58,7 @@ def update_trainer_details(request,pk):
         user_obj = get_object_or_404(TrainerProfile,pk=pk)
         if image:
             user_obj.trainer_profile_picture.save(image.name, image) 
-        user_obj.trainer.username=username
+
         user_obj.trainer.first_name=first_name
         user_obj.trainer.last_name=last_name
         user_obj.trainer.email=email
@@ -54,5 +72,6 @@ def update_trainer_details(request,pk):
     
     
     return render(request,"edit-trainer-details.html",{'user': user})
+
 
 

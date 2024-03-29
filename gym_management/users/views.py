@@ -8,42 +8,60 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from users.custom_decorator import resist_pages
 
 
-
-
+@never_cache
+@resist_pages
 def home(request):
     return render(request,'index.html')
 
+@never_cache
+@resist_pages
 def contact_page(request):
      return render(request,'contact.html')
 
+@never_cache
+@resist_pages
 def blog_page(request):
      return render(request,'blog.html')
 
+@never_cache
+@resist_pages
 def blog_elements_page(request):
      return render(request,'blog-elements.html')
 
+@never_cache
+@resist_pages
 def gallery_page(request):
      return render(request,'gallery.html')
 
+@never_cache
+@resist_pages
 def pricing_page(request):
      return render(request,'pricing.html')
 
+@never_cache
+@resist_pages
 def courses_page(request):
      return render(request,'courses.html')
 
+@never_cache
+@resist_pages
 def about_page(request):
      return render(request,'about.html')
 
 
 # when signup button clicks it will redirect to user registeration button page
+
+@never_cache
+@resist_pages
 def registration_redirection(request):
     return render(request,"register.html")
 
-        
 
-
+@never_cache
+@resist_pages
 def student_registeration_form(request):   
    if request.method == "POST":
 
@@ -81,6 +99,8 @@ def student_registeration_form(request):
    return render(request, 'student_signup.html')
 
 
+@never_cache
+@resist_pages
 def trainer_registeration_form(request):
        
     if request.method == "POST":
@@ -103,25 +123,25 @@ def trainer_registeration_form(request):
             user = CustomUser.objects.create(username=username,email=email, phone=phone,age=age, place=place,gender=gender, 
                                              specialization=specialization, experience_years= experience_years,
                                               certifications= certifications,qualification=qualification)
-            user.is_student = True
+            user.is_trainer = True
             user.set_password(password)
             user.save()
             return redirect('user_login')
         
         except IntegrityError:
-            # Handle the case where the username already exists
             message = "Username already exists. Please choose a different one."
             return render(request, 'trainer_signup.html', {'message': message})
 
         except Exception as e:
-            # Handle any other exceptions here
-            print(e)  # Print the exception for debugging purposes
+            print(e)  
             message = "An error occurred. Please try again later."
             return render(request, 'trainer_signup.html', {'message': message})
 
     return render(request,"trainer_signup.html")
 
 
+@never_cache
+@resist_pages
 def social_user_login(request):
      social_user = get_object_or_404(CustomUser,username=request.user)
      if social_user.is_student == True and social_user.is_approved == True :
@@ -148,32 +168,19 @@ def social_user_login(request):
      return render(request,'social-auth.html')
 
 
-@never_cache
-def user_login(request):
-       
-        if request.session.get('user_key'):
-                print(request.session.get('user_key'))
-                logged_user = get_object_or_404(CustomUser,username=request.session.get('user_key'))
-                print("hiiii",logged_user)
-                if logged_user.is_trainer :
-                    return redirect('trainer_homepage')
-                elif logged_user.is_student :
-                        return redirect('student_homepage')
-                # elif logged_user.is_superuser:
-                else:
-                       return redirect('users_list')
-                # else:
-                #       return render(request,'user_login.html')
-        else:
-                         
-                if request.method == "POST":
-                    username = request.POST.get('username')
-                    password = request.POST.get('password')
 
-                    user = authenticate(username=username,password=password)
+@never_cache
+@resist_pages
+def user_login(request):
+                         
+         if request.method == "POST":
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+
+                user = authenticate(username=username,password=password)
                    
                         
-                    if user is not None :
+                if user is not None :
                         if user.is_approved :
                                 request.session['user_key'] = username
                                 if user.is_student :
@@ -191,10 +198,11 @@ def user_login(request):
                                     
                         else:
                             return render(request,"decline.html")
-                    else:
-                            return HttpResponseForbidden("Invalid login credentials.")
                 else:
-                    return render(request,'user_login.html')
+                    return render(request,'invalid_login.html')
+         else:
+            return render(request,'user_login.html')
+                
                 
         
 def user_logout(request):

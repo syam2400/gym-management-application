@@ -18,15 +18,15 @@
         "key": "{{data.key}}", // Enter the Key ID generated from the Dashboard
         "amount": "{{data.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
-        "name": "Ashion",
+        "name": "Gym-mangement-app",
         "description": "Test Transaction",
-        "image": "https://example.com/your_logo",
+        "image": "{% static 'assets/img/logo/logo.png' %}",
         "order_id": "{{data.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": "http://127.0.0.1:8000/gym-students/payment-success/",
+        "callback_url": "{{callback}}",
         "prefill": {
-            "name": "Syam",
-            "email": "gaurav.kumar@example.com",
-            "contact": "9000090000"
+            "name": "{{user.student.username}}",
+            "email": "{{user.student.email}}",
+            "contact": "{{user.student.phone}}"
         },
         "notes": {
             "address": "Razorpay Corporate Office"

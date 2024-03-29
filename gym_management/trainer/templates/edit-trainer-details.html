@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Gym trainer | Template </title>
+    <title>Gym trainer |  </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
@@ -80,8 +80,13 @@
 </header>
 
 <section style="margin-top: 130px;">
+    {% if message %}
+    <h1 style="display: flex;justify-content: center;align-items: center;font-size: 30px;"> {{message}}</h1>
+     {% endif %}
     <div class="container rounded bg-white mt-5 mb-5">
+      
         <div class="row">
+         
             <div class="col-md-3 border-right">
                 <form method="post" enctype="multipart/form-data" action="{% url 'trainer_details' user.id %}">
                     {% csrf_token %}
@@ -107,7 +112,7 @@
                             <h4 class="text-right">Profile Settings</h4>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="enter phone number" name="username" value="{{user.trainer.username}}"></div>
+                          
                             <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" name="first_name" value="{{user.trainer.first_name}}"></div>
                             <div class="col-md-6"><label class="labels">Last name</label><input type="text" class="form-control"  placeholder="last-name" name="last_name" value="{{user.trainer.last_name}}"></div>
                         </div>

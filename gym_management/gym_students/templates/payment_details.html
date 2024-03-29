@@ -1,0 +1,79 @@
+<!-- payment_app/templates/payment_success.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .user-detail-container {
+  background-color: #2080b0;
+  color: #fff;
+ 
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(52, 187, 70, 0.1);
+  padding-bottom: 500px;
+}
+  table {
+      width: 70%;
+      border-collapse: collapse;
+  }
+  th, td {
+     font-size: 15px;
+      border: 1px solid #8b8b8b;
+      padding: 8px;
+      text-align: left;
+  }
+  th {
+    font-size: 15px;
+      background-color: #04AA6D;
+      color: white;
+  }
+  tr:nth-child(even) {
+      background-color: #91d096;
+  }
+  tr:hover {
+      background-color: #ddd;
+  }
+</style>
+<h1 style="color: white;margin-top: 150px;display: flex;justify-content: center;align-items: center;">PAYMENT DETAILS</h1>
+<section style="display: flex;justify-content: center;align-items: center;margin-top: 20px;margin-bottom: 80px;">
+ 
+  
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>order_id</th>
+                    <th>Amount</th>
+                    <th>datetime of payment</th>
+                    <th>Payment Status</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                {% for order_details in  user_order_details %}
+                <tr style="background-color: aliceblue;">
+                    <td> {{order_details.Student_user.student.username}}</td>
+                    <td> {{order_details.order_id }}</td>
+                    <td> {{order_details.total_amount}}</td>
+                    <td> {{order_details.datetime_of_payment}}</td>
+                    <td> {% if order_details.is_payemnt_success %}
+                        Success
+                        {% else %}
+                        Failed
+                        {% endif %}
+                    </td>
+                </tr>
+               {% endfor %}
+            </tbody>
+        </table>
+
+   
+      
+
+
+</section>
+
+    
+{% endblock %}

@@ -16,8 +16,6 @@ class StudentProfile(models.Model):
         return self.student.username
 
 
-
-
 class Room(models.Model):
     name = models.CharField(max_length=20)
     slug = models.SlugField(max_length=100)
@@ -36,3 +34,22 @@ class Message(models.Model):
 
     def __str__(self):
         return "Message is :- "+ self.content
+    
+
+class Order(models.Model):
+   
+    Student_user = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    is_payemnt_success = models.BooleanField(default=False, null=True, blank=True)
+    total_amount = models.FloatField(null=True, blank=True)
+    order_id = models.CharField(unique=True, max_length=100, null=True, blank=True, default=None) 
+    datetime_of_payment = models.DateTimeField(auto_now_add=True)
+ 
+    razorpay_order_id = models.CharField(max_length=500, null=True, blank=True)
+    razorpay_payment_id = models.CharField(max_length=500, null=True, blank=True)
+    razorpay_signature = models.CharField(max_length=500, null=True, blank=True)
+    
+
+
+    def __str__(self):
+        return self.Student_user.student.username
+    

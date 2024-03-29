@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from users.custom_decorator import resist_pages
 from users.models import *
 from trainer.models import *
 from gym_students.models import *
@@ -6,8 +7,15 @@ from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse
 from owner.models import *
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+from users.custom_decorator import resist_pages
 
 
+
+@never_cache
+@resist_pages
+@login_required
 def users_list(request):
     trainer_users = CustomUser.objects.filter(is_trainer=True)
     student_user = CustomUser.objects.filter(is_student=True)
@@ -18,6 +26,8 @@ def users_list(request):
     return render(request,'owner-index.html',context)
 
 # for approving registered user to login,without approval user cant login
+
+
 def approve_user(request, user_id,):  
         if request.method == 'POST':
             status = request.POST.get('status')
@@ -42,6 +52,11 @@ def approve_user(request, user_id,):
                   return redirect('users_list')
 
 
+
+
+@never_cache
+@resist_pages
+@login_required
 def user_detail_view(request,pk):
       user_details = get_object_or_404(CustomUser, pk=pk)
       if user_details.is_trainer==True:
@@ -55,17 +70,11 @@ def user_detail_view(request,pk):
          
            return render(request,'unapproved-user-view.html',)
 
-# def update_payment_status(request,pk):
-#       update_user_payment = get_object_or_404(CustomUser,pk=pk)
-#       # update_user_payment.is_paid = True
-#       # update_user_payment.save()
-#       if 'payment_status_submitted' in request.POST:
-#         update_user_payment.is_paid = 'is_paid' in request.POST
-#         update_user_payment.save()
-#         context = {'status': 'payement received'}
-#         return render(request,'unapproved-user-view.html', context)
-#       return render(request,'unapproved-user-view.html')
 
+
+@never_cache
+@resist_pages
+@login_required
 def update_payment_status(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     
@@ -89,15 +98,25 @@ def update_payment_status(request, pk):
 
 
 
+@never_cache
+@resist_pages
+@login_required
 def student_details(request):
       student_users =StudentProfile.objects.all()
       return render(request,'student-details.html',{'student_users': student_users})
-      
+
+
+@never_cache
+@resist_pages
+@login_required     
 def trainer_details(request):
       trainer_users =TrainerProfile.objects.all()
       return render(request,'trainer-detail.html',{'trainer_users':  trainer_users })
       
 
+@never_cache
+@resist_pages
+@login_required
 def operations(request):
        
       get_trainers = TrainerProfile.objects.all()
@@ -108,6 +127,10 @@ def operations(request):
       }
       return render(request,'operations.html',context)
 
+
+@never_cache
+@resist_pages
+@login_required
 def assign_trainers(request,pk):
       if request.method == 'POST':
            assigned_trainer_id = request.POST.get('trainer')
@@ -120,6 +143,9 @@ def assign_trainers(request,pk):
            return redirect('operations')
           
 
+
+@never_cache
+@resist_pages
 def user_enquiry(request):
      if request.method == 'POST':
           description = request.POST.get('description')
@@ -136,6 +162,18 @@ def user_enquiry(request):
         return render(request,'contact.html',{'enquiry_obj':enquiry_obj})
           
 
+@never_cache
+@resist_pages
+@login_required
 def all_cus_enquiries(request):
      enquiry_data = CustomerEnquiry.objects.all()
      return render(request,'enquiry-details.html',{'enquiry_data':enquiry_data})
+
+
+
+@never_cache
+@resist_pages
+@login_required
+def online_payment_details(request):
+     order_details = Order.objects.all()
+     return render(request,'online-payment.html',{'user_order_details':order_details})

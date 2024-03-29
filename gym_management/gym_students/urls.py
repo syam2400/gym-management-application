@@ -23,12 +23,11 @@ urlpatterns = [
     path('student_profile/', views.students_profile_view,name="student_profile"),
     path('edit-user-details/<int:pk>/', views.update_user_details,name="edit_user_details"),
 
-    path("<str:slug>/", views.chat_rooms_view, name="chat_room_page"),
+    path("chat/<str:slug>/", views.chat_rooms_view, name="chat_room_page"),
 
     path('initiate-payments', views.initiate_payment_view,name="initiate_payments"),
-    path("payment-success/", views.payment_success, name="payment_success"),
-    path("payment-failed/", views.payment_failed, name="payment_failed"),
-  
+    path("payment-success/", views.payment_success, name="payment-success"),
+    path('payment-details-page/<int:pk>/', views.payment_details_view, name="payment_details"),
   
 ]
 

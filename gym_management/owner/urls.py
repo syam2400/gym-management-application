@@ -31,5 +31,7 @@ urlpatterns = [
     path('assign_trainers/<int:pk>/',views.assign_trainers,name='assign_trainers'),
     path('enquiry',views.user_enquiry,name='enquiry'),
     path('view_enquiry_data',views.all_cus_enquiries,name='view_enquiry_data'),
+    path('payment-details-page', views.online_payment_details, name="online_payment"),
+    
 ]
 
