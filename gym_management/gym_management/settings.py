@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+    # 'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,13 +55,13 @@ INSTALLED_APPS = [
 
 WSGI_APPLICATION = 'gym_management.wsgi.application'
 
-ASGI_APPLICATION = 'gym_management.asgi.application'
+# ASGI_APPLICATION = 'gym_management.asgi.application'
 
-CHANNEL_LAYERS = {
-	"default": {
-		"BACKEND": "channels.layers.InMemoryChannelLayer"
-	}
-}
+# CHANNEL_LAYERS = {
+# 	"default": {
+# 		"BACKEND": "channels.layers.InMemoryChannelLayer"
+# 	}
+# }
 
 
 # backend credentials for google social auth
