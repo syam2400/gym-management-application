@@ -3,7 +3,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "gym_management/asgi.py",
+        "src": "gym_management/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
       },
@@ -22,7 +22,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "gym_management/asgi.py"
+        "dest": "gym_management/wsgi.py"
       }
     ]
   }
