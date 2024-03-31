@@ -11,4 +11,4 @@ django-extensions==3.2.3
 social-auth-app-django==5.4.0
 django-cors-headers==4.3.1
 python-dotenv
-psycopg-binar==3.1.18
+psycopg-binary 

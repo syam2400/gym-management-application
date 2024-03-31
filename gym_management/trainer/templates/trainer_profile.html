@@ -51,7 +51,7 @@
 
     <div class="container-fluid profile-container" style="background-color: rgb(21, 14, 14);color: white;">
         <div class="row">
-            <div class="col-md-3 img-column" style="height: auto;background-color: rgb(58, 54, 54);">
+            <div class="col-md-3  img-column" style="height: auto;background-color: rgb(58, 54, 54);">
                 {% if trainer_user.trainer_profile_picture %}
                 <img src="{{trainer_user.trainer_profile_picture.url }}" alt="Profile Image" class="img-fluid rounded">
                 {% else %}
@@ -65,7 +65,8 @@
                 <div class="personal-info">
                     <h5>Contact Information</h5>
                     <p  style="color: white;text-transform: uppercase;">Full Name:{{trainer_user.trainer.first_name}}{{trainer_user.trainer.last_name}}</p>
-                    <p style="color: white;text-transform: uppercase;">Email: {{trainer_user.trainer.email}}</p>
+                    <p style="color: white;text-transform: uppercase;">Place: {{trainer_user.trainer.place}}</p>
+                    <!-- <p style="color: white;text-transform: uppercase;width: auto;">Email:<br> {{trainer_user.trainer.email}}</p> -->
                     <p style="color: white;text-transform: uppercase;">Phone: {{trainer_user.trainer.phone}}</p>
 
                     <p style="color: white;text-transform: uppercase;">{{trainer_user.trainer.address}}</p>
@@ -79,7 +80,8 @@
 
             </div>
 
-            <div class="col-md-9 info-column" style="display: flex;flex-direction: column;">
+            <div class=" col-md-9 col-sm-12 info-column" style="display: flex;flex-direction: column;height: auto;">
+                <!--  -->
 
                 <div class="profile-header d-flex justify-content-between align-items-center"
                     style="background-color: rgb(58, 54, 54);">
@@ -107,6 +109,8 @@
                         <div class="card" style="width: 18rem;width: auto;background-color:rgb(58, 54, 54) ;">
                             <div class="card-body col-md-12">
                                 <h5 class="card-title" style="font-size: 30px;text-transform: uppercase;">{{student}}</h5>
+                                  
+                                <p class="card-text" style="color: white;">{{student.student.phone}}</p>
                                 <p class="card-text" style="color: white;">With supporting text below as a natural lead-in
                                     to additional content.</p>
     
@@ -355,13 +359,8 @@
                 </div>
              </div>
 
-                
-
-
-
             </div>
-
-
+            
         </div>
     </div>
 
